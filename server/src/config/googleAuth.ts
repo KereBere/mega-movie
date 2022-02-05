@@ -10,6 +10,7 @@ declare module "express-serve-static-core" {
   }
 }
 export const checkGoogleUser: RequestHandler = (req, res, next) => {
+  console.log(req.cookies["session-token"]);
   console.log("dwdwadwadwad");
   console.log("dwdwadwadwad");
   const token = req.body.token;

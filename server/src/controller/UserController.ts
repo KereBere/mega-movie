@@ -1,4 +1,4 @@
-import express, { RequestHandler } from "express";
+import express, { Request, RequestHandler, Response } from "express";
 import { User } from "../entity/User";
 import jwt from "jsonwebtoken";
 const { OAuth2Client } = require("google-auth-library");
@@ -68,16 +68,8 @@ class UserController {
     await User.findOne({ where: { email } })
       .then((user) => {
         if (user) {
-          console.log("gogigo");
-          const token = jwt.sign(
-            { userId: user.id, username: user.username },
-            "config.jwtSecret",
-            {
-              expiresIn: "1h",
-            }
-          );
-          req.session.userId = user.id;
-          res.status(201).send(token);
+          console.log("Google user exist");
+          createSendTokenAndCookie(user.id, user.username, req, res);
         } else {
           const user = new User();
           user.name = name;
@@ -85,19 +77,8 @@ class UserController {
           user.username = name.split(" ").slice(-1).join(" ");
           user.createddAt = new Date();
           User.save(user);
-          const token = jwt.sign(
-            { userId: user.id, username: user.username },
-            "config.jwtSecret",
-            {
-              expiresIn: "1h",
-            }
-          );
-          req.session.userId = user.id;
-          res.cookie("session-token", token, {
-            httpOnly: true,
-            maxAge: 30 * 24 * 60 * 60,
-          });
-          res.status(201).send("success");
+          console.log("Google user created");
+          createSendTokenAndCookie(user.id, user.username, req, res);
         }
       })
       .catch((error) => {
@@ -107,3 +88,24 @@ class UserController {
   };
 }
 export default UserController;
+function createSendTokenAndCookie(
+  userId: string,
+  username: string,
+  req: Request,
+  res: Response
+) {
+  const token = jwt.sign(
+    { userId: userId, username: username },
+    "config.jwtSecret",
+    {
+      expiresIn: "1h",
+    }
+  );
+  req.session.userId = userId;
+  console.log("cookie send");
+  res.cookie("session-token", token, {
+    httpOnly: true,
+    maxAge: 30 * 24 * 60 * 60,
+  });
+  res.status(201).send("success");
+}
