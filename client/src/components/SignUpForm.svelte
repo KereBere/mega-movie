@@ -1,5 +1,11 @@
 <script>
 	import SocialAuth from './SocialAuth.svelte';
+    function fbSDKLoaded() {
+        FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+});
+}
+
 </script>
 
 <div id="animatedBackground">
@@ -18,13 +24,14 @@
 			<SocialAuth />
 		</div>
 		<div class="or" id="or">OR</div>
+
 	</div>
 </div>
 
 <style>
 	#animatedBackground {
-        display: flex;
-        align-items: center;
+		display: flex;
+		align-items: center;
 		width: 100%;
 		height: 100%;
 		position: absolute;
@@ -54,14 +61,13 @@
 			left: 65px;
 			width: 40px;
 			height: 40px;
-			background: #ddd;
 			border-radius: 50%;
 			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 			line-height: 40px;
 			text-align: center;
 		}
 		#login-box {
-            background-color: rgba(0, 0, 0, 0.4);
+			background-color: rgba(0, 0, 0, 0.4);
 			display: flex;
 			flex-direction: column;
 			position: relative;
@@ -86,18 +92,17 @@
 	#login-box {
 		display: flex;
 		position: relative;
-        padding: 25px;
+		padding: 25px;
 		margin: 5% auto;
 		min-width: 250px;
 		max-width: 600px;
 		background: #fff;
 		border-radius: 15px;
-        background: rgba(27, 29, 27, 0.8) /* Green background with 30% opacity */
-
+		background: rgba(27, 29, 27, 0.8); /* Green background with 30% opacity */
 	}
 
 	.left {
-        color: white;
+		color: white;
 		box-sizing: border-box;
 		padding: 40px;
 		width: 300px;
@@ -109,11 +114,11 @@
 		font-weight: 300;
 		font-size: 28px;
 	}
-    input{
-        border-radius: 5px;
-        padding: 10px;
-        margin-bottom: 25px;
-    }
+	input {
+		border-radius: 5px;
+		padding: 10px;
+		margin-bottom: 25px;
+	}
 
 	input[type='text'],
 	input[type='password'] {
@@ -175,9 +180,8 @@
 		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 		line-height: 40px;
 		text-align: center;
-        color: white;
+		color: white;
 	}
- 
 
 	.right {
 		box-sizing: border-box;

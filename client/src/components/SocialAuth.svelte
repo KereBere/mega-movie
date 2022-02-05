@@ -6,6 +6,7 @@
 			console.log('User signed out.');
 		});
 	}
+
 </script>
 
 <div class="social-con">
@@ -29,8 +30,8 @@
 	/>
 	<FacebookAuth
 		class="facebook"
-		appId="your-facebook-app-id"
-		on:auth-success={(e) => console.dir(e.detail.user)}
+		appId="2945418792437629"
+		on:auth-success={(e) => console.dir(e)}
 	/>
 </div>
 

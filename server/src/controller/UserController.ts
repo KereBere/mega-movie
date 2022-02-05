@@ -86,6 +86,9 @@ class UserController {
         console.log(error);
       });
   };
+  public static facebookLogin: RequestHandler = async (req, res) => {
+    
+  };
 }
 export default UserController;
 function createSendTokenAndCookie(

@@ -15,5 +15,6 @@ router.post(
 );
 router.post("/login", UserController.login);
 router.post("/google", checkGoogleUser, UserController.googleNewUSer);
+router.post("/facebook", checkGoogleUser, UserController.facebookLogin);
 
 export default router;
