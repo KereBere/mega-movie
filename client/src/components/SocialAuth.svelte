@@ -39,7 +39,7 @@
 		justify-content: space-between;
 		display: flex;
 		flex-direction: column;
-		height: 150px;
-		width: 250px;
+		height: 120px; 
+		width: 100%;
 	}
 </style>

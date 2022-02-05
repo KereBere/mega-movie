@@ -2,9 +2,7 @@ import express, { Request, RequestHandler, Response } from "express";
 import { User } from "../entity/User";
 import jwt from "jsonwebtoken";
 const { OAuth2Client } = require("google-auth-library");
-const client = new OAuth2Client(
-  "1082370461576-ufpkai7fq1n2mdkrjbej29m3u24nv1m2.apps.googleusercontent.com"
-);
+const client = new OAuth2Client(process.env.CLIENT_ID);
 declare module "express-session" {
   interface SessionData {
     userId: string;
@@ -46,19 +44,21 @@ class UserController {
       res.status(401).send();
       return;
     }
-    const token = jwt.sign(
-      { userId: user.id, username: user.username },
-      "config.jwtSecret",
-      {
-        expiresIn: "1h",
-      }
-    );
-    req.session.userId = user.id;
-    res.cookie("session-token", token, {
-      httpOnly: true,
-      maxAge: 30 * 24 * 60 * 60,
-    });
-    res.status(201).send("success");
+    createSendTokenAndCookie(user.id, user.username, req, res);
+
+    // const token = jwt.sign(
+    //   { userId: user.id, username: user.username },
+    //   process.env.ACCESS_TOKEN_SECRET,
+    //   {
+    //     expiresIn: "1h",
+    //   }
+    // );
+    // req.session.userId = user.id;
+    // res.cookie("session-token", token, {
+    //   httpOnly: true,
+    //   maxAge: 30 * 24 * 60 * 60,
+    // });
+    // res.status(201).send("success");
   };
 
   public static googleNewUSer: RequestHandler = async (req, res) => {
@@ -96,16 +96,18 @@ function createSendTokenAndCookie(
 ) {
   const token = jwt.sign(
     { userId: userId, username: username },
-    "config.jwtSecret",
+    process.env.ACCESS_TOKEN_SECRET,
     {
       expiresIn: "1h",
     }
   );
   req.session.userId = userId;
   console.log("cookie send");
+  console.log("token: " + token);
   res.cookie("session-token", token, {
     httpOnly: true,
     maxAge: 30 * 24 * 60 * 60,
   });
+  console.log(req.cookies["session-token"]);
   res.status(201).send("success");
 }

@@ -24,7 +24,5 @@
 	// export let popular;
 	// import { fly } from 'svelte/transition';
 
-	import SocialAuth from '../components/SocialAuth.svelte';
 </script>
-
-<SocialAuth />
+ 
