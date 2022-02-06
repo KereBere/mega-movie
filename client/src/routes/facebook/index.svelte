@@ -33,7 +33,7 @@
 					authResponse: { accessToken, userID }
 				} = response;
 
-				fetch('https://localhost:4000/user/facebook-login', {
+				fetch('https://localhost:3443/user/facebook-login', {
 					method: 'POST',
 					headers: {
 						'Content-type': 'application/json'

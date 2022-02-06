@@ -2,7 +2,7 @@
   "name": "dbmovie-sveltekit",
   "version": "0.0.1",
   "scripts": {
-    "dev": "svelte-kit dev --port 4000",
+    "dev": "svelte-kit dev --port 4000 --https",
     "build": "svelte-kit build",
     "package": "svelte-kit package",
     "preview": "svelte-kit preview",

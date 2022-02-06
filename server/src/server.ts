@@ -1,21 +1,28 @@
 import "dotenv/config";
 import "reflect-metadata";
 import express from "express";
+import https from "https";
+import path from "path";
+import fs from "fs";
 import { createConnection, getConnection } from "typeorm";
 import routes from "./routes";
 import cookieParser from "cookie-parser";
 var cors = require("cors");
 
 import session from "express-session";
-import path from "path";
 // import * as session from "express-session";
 // import { TypeormStore } from "typeorm-store";
 // import { Session } from "./entity/session";
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3443;
 createConnection()
   .then(async () => {
     const app = express();
+
+    const httpOptions = {
+      cert: fs.readFileSync(path.join(__dirname, "ssl", "cert.pem")),
+      key: fs.readFileSync(path.join(__dirname, "ssl", "key.pem")),
+    };
 
     app.use(cors());
     app.use(express.urlencoded({ extended: true }));
@@ -33,8 +40,11 @@ createConnection()
         saveUninitialized: true,
       })
     );
+
     app.use("/", routes);
 
-    app.listen(port, () => console.log(`I am listening on port ${port} 😸`));
+    https.createServer(httpOptions, app).listen(port, () => {
+      console.log(`Serving https server in the ${port}`);
+    });
   })
   .catch((error) => console.log("Uh-oh 😿", error));

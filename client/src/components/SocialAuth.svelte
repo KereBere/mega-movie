@@ -15,7 +15,7 @@
 		on:auth-success={(e) => {
 			const id_token = e.detail.user.wc.id_token;
 			let xhr = new XMLHttpRequest();
-			xhr.open('POST', 'http://localhost:3000/user/google');
+			xhr.open('POST', 'https://localhost:3443/user/google');
 			xhr.setRequestHeader('Content-Type', 'application/json');
 			console.log(xhr.responseText);
 			xhr.onload = function () {
