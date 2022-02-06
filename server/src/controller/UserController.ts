@@ -87,7 +87,8 @@ class UserController {
       });
   };
   public static facebookLogin: RequestHandler = async (req, res) => {
-    console.log(req.body);
+     console.log("hehe");
+     res.send(req.body);
   };
 }
 export default UserController;

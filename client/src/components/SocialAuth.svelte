@@ -11,7 +11,7 @@
 
 <div class="social-con">
 	<GoogleAuth
-		clientId="1082370461576-ufpkai7fq1n2mdkrjbej29m3u24nv1m2.apps.googleusercontent.com"
+		clientId="1076165607566-n80j275v4u2nat71sndbltght69lr2v1.apps.googleusercontent.com"
 		on:auth-success={(e) => {
 			const id_token = e.detail.user.wc.id_token;
 			let xhr = new XMLHttpRequest();
