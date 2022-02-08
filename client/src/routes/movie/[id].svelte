@@ -1,7 +1,7 @@
 <script context="module">
 	export async function load({ fetch, params }) {
 		const res = await fetch(
-			`https://api.themoviedb.org/3/movie/${params.id}?api_key=efaf0b9bf33d3ed3967457d165031a0b&language=en-US`
+			`https://api.themoviedb.org/3/movie/${params.id}?api_key=${import.meta.env.VITE_API}&language=en-US`
 		);
 		const movieDetail = await res.json();
 		if (res.ok) {
@@ -24,9 +24,8 @@
 <div class="movie-details" in:fly={{y:50 , duration: 500, delay:500}} out:fly={{  duration: 500}}>
 	<div class="img-container">
 		<img
-			src={'https://image.tmdb.org/t/p/w500' + movieDetail.backdrop_path}
+			src={'https://image.tmdb.org/t/p/original' + movieDetail.backdrop_path}
 			alt={movieDetail.title}
-			srcset=""
 		/>
 	</div>
 	<div class="txt-container">

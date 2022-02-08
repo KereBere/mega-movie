@@ -1,15 +1,5 @@
 <script>
 	import { onMount } from 'svelte';
-	console.log('hehe	')
-	fetch('https://localhost:3443/user/facebook-login', {
-					method: 'POST',
-					headers: {
-						'Content-type': 'application/json'
-					},
-					body: JSON.stringify({ "accessToken": "userID" })
-				}).then((res) => {
-					console.log(res)
-				});
 	onMount(async () => {
 		window.fbAsyncInit = function () {
 			FB.init({
@@ -38,18 +28,20 @@
 		console.log('zeze');
 		FB.login(
 			(response) => {
+				console.log(response)
 				const {
 					authResponse: { accessToken, userID }
 				} = response;
 
 				fetch('https://localhost:3443/user/facebook-login', {
+					mode : "no-cors",
 					method: 'POST',
 					headers: {
-						'Content-type': 'application/json'
+						'Content-Type': 'application/json'
 					},
 					body: JSON.stringify({ accessToken, userID })
 				}).then((res) => {
-					console.log(res)
+					console.log(res);
 				});
 			},
 			{ scope: 'public_profile, email' }

@@ -1,30 +1,29 @@
 <script>
 	import SocialAuth from './SocialAuth.svelte';
-	let name, username, email, password, password2;
+	let email, password;
 	let message;
-	let errors = [];
+	let error;
 	const submitForm = async (res) => {
+		message = "";
+		error = "";
 		try {
-			const submit = await fetch('https://localhost:3443/user/newUser', {
+			const submit = await fetch('https://localhost:3443/user/login', {
+				credentials: "same-origin",
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
-					name,
-					username,
 					email,
-					password,
-					password2
+					password
 				})
 			});
-			// res.status >= 400 ? console.log("accept") : console.log("catck Error")
 			const data = await submit.json();
 			if (data.success) {
 				message = data.message;
 				setTimeout(() => {
-					window.location.href = "/auth/signin"
+					window.location.href = "/"
 				}, 2000);
 			} else {
-				errors = data.errors;
+				error = data.error;
 				throw new Error('something went wrong. IDK neither');
 			}
 		} catch (err) {
@@ -36,10 +35,8 @@
 <div id="animatedBackground">
 	<div id="login-box">
 		<div class="left">
-			<h1>Sign up</h1>
+			<h1>Sign In</h1>
 			<form on:submit|preventDefault={submitForm}>
-				<input type="text" name="name" placeholder="Name" bind:value={name} required />
-				<input type="text" name="username" placeholder="Username" bind:value={username} required />
 				<input type="text" name="email" placeholder="E-mail" bind:value={email} required />
 				<input
 					type="password"
@@ -48,32 +45,25 @@
 					bind:value={password}
 					required
 				/>
-				<input
-					type="password"
-					name="password2"
-					placeholder="Retype password"
-					bind:value={password2}
-					required
-				/>
 				<input type="submit" value="Sign me up" />
 			</form>
 		</div>
 
 		<div class="right" id="right">
 			<div class="error-con">
-				{#if errors.length > 0 || message}
-					{#each errors as error}
-						<p class="error-p">
-							{'! ' + error}
-						</p>
-					{/each}
-					<p class="success-p">
-						{'! ' + message+" Please login now."}
+				{#if error  }
+					<p class="error-p">
+						{'! ' + error}
 					</p>
+				{/if} 
+				{#if message}
+				<p class="success-p">
+					{'! ' +message +"Redirecting to homepage"}
+				</p>
 				{/if}
 			</div>
 			<SocialAuth />
-			<a class="have-acc" href="/auth/signin"><p>Already have an account? Sign in!</p></a>
+			<a class="have-acc" href="/auth/signup"><p>Don't have an account? Sign up!</p></a>
 		</div>
 		<div class="or" id="or">OR</div>
 	</div>
@@ -127,7 +117,7 @@
 		}
 		#or {
 			position: absolute;
-			top: 405px;
+			top: 335px;
 			left: 40px;
 			width: 40px;
 			height: 40px;
@@ -174,20 +164,19 @@
 	.left {
 		color: white;
 		box-sizing: border-box;
-		padding: 40px;
+		padding: 40px 40px 0px;
 		width: 300px;
-		height: 400px;
 	}
 
 	h1 {
-		margin: 0 0 20px 0;
+		margin: 70px 0 20px 0;
 		font-weight: 300;
 		font-size: 28px;
 	}
 	input {
 		border-radius: 5px;
 		padding: 10px;
-		margin-bottom: 25px;
+		margin-bottom: 55px;
 	}
 
 	input[type='text'],

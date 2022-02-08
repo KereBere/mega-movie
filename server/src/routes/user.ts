@@ -13,7 +13,8 @@ router.post(
   sendValidationErrors,
   UserController.newUser
 );
-router.post("/login", UserController.login);
+router.post("/login", UserController.login); 
+
 router.post("/google", checkGoogleUser, UserController.googleNewUSer);
 router.post("/facebook-login", UserController.facebookLogin);
 

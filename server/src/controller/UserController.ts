@@ -1,4 +1,4 @@
-import express, { Request, RequestHandler, Response } from "express";
+import { Request, RequestHandler, Response } from "express";
 import { User } from "../entity/User";
 import jwt from "jsonwebtoken";
 const { OAuth2Client } = require("google-auth-library");
@@ -10,6 +10,7 @@ declare module "express-session" {
 }
 class UserController {
   public static newUser: RequestHandler = async (req, res) => {
+    console.log(req.body);
     const { name, username, email, password } = req.body;
     const user = new User();
     user.name = name;
@@ -22,43 +23,40 @@ class UserController {
     try {
       await User.save(user);
     } catch (err) {
-      return res.status(409).send(err);
+      return res.json({ success: false, errors: "err" });
     }
-    res.status(201).send("User Created");
+    console.log("user created");
+    return res.status(201).json({ success: true, message: "User Created" });
   };
 
   public static login: RequestHandler = async (req, res) => {
     const { email, password } = req.body;
+    console.log(req.body);
     if (!(email && password)) {
-      res.status(400).send();
+      return res.status(400).json({
+        success: false,
+        error: "Please enter your email and password",
+      });
     }
     const userRepository = User;
     let user: User;
     try {
       user = await userRepository.findOneOrFail({ where: { email } });
     } catch (error) {
-      res.status(401).send();
+      return res
+        .status(401)
+        .json({ success: false, error: "User does not exist" });
     }
 
     if (!user.checkIfUnencryptedPasswordIsValid(password)) {
-      res.status(401).send();
-      return;
+      return res
+        .status(401)
+        .json({ success: false, error: "Invalid password" });
     }
     createSendTokenAndCookie(user.id, user.username, req, res);
-
-    // const token = jwt.sign(
-    //   { userId: user.id, username: user.username },
-    //   process.env.ACCESS_TOKEN_SECRET,
-    //   {
-    //     expiresIn: "1h",
-    //   }
-    // );
-    // req.session.userId = user.id;
-    // res.cookie("session-token", token, {
-    //   httpOnly: true,
-    //   maxAge: 30 * 24 * 60 * 60,
-    // });
-    // res.status(201).send("success");
+    return res
+      .status(201)
+      .json({ success: true, message: "Login Successfull" });
   };
 
   public static googleNewUSer: RequestHandler = async (req, res) => {
@@ -87,8 +85,10 @@ class UserController {
       });
   };
   public static facebookLogin: RequestHandler = async (req, res) => {
-     console.log("hehe");
-     res.send(req.body);
+    console.log("hehe");
+    console.log(req.body);
+    console.log(req.cookies);
+    res.json("dwadwadwd");
   };
 }
 export default UserController;
@@ -108,10 +108,10 @@ function createSendTokenAndCookie(
   req.session.userId = userId;
   console.log("cookie send");
   console.log("token: " + token);
-  res.cookie("session-token", token, {
+  res.cookie("sessionToken", token, {
     httpOnly: true,
     maxAge: 30 * 24 * 60 * 60,
+    secure: false,
   });
   console.log(req.cookies["session-token"]);
-  res.status(201).send("success");
 }

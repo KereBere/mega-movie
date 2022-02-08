@@ -43,3 +43,5 @@ export class User extends BaseEntity {
     return bcrypt.compareSync(unencryptedPassword, this.password);
   }
 }
+
+export default User;

@@ -24,7 +24,11 @@ createConnection()
       key: fs.readFileSync(path.join(__dirname, "ssl", "key.pem")),
     };
 
-    app.use(cors());
+    app.use(
+      cors({
+        origin: "*",
+      })
+    );
     app.use(express.urlencoded({ extended: true }));
     app.use(express.static("public"));
     app.use(express.json());

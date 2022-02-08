@@ -15,9 +15,6 @@ export class Comment extends BaseEntity {
   id: string;
 
   @Column()
-  commentator: string;
-
-  @Column()
   comment: string;
 
   @ManyToOne(() => User, (user) => user.comments)

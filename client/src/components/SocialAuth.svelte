@@ -31,13 +31,14 @@
 	<FacebookAuth
 		class="facebook"
 		appId="2945418792437629"
-		on:auth-success={(e) => console.dir(e)}
+		on:auth-success={(e) => console.dir(e.detail)}
 	/>
 </div>
 
 <style>
 	.social-con {
-		justify-content: space-between;
+		margin-top: 10px;
+		justify-content: space-around;
 		display: flex;
 		flex-direction: column;
 		height: 120px; 

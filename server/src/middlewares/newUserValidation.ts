@@ -8,7 +8,9 @@ export const sendValidationErrors: RequestHandler = async (req, res, next) => {
     .array()
     .map((error) => error.msg);
 
-  errors.length > 0 ? res.send(errors) : next();
+  errors.length > 0
+    ? res.status(400).json({ success: false, errors: errors })
+    : next();
 };
 
 export const newUserValidation = [
