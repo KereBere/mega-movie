@@ -5,7 +5,7 @@ import { RequestHandler } from "express";
 class MovieController {
   public static newFavMovie: RequestHandler = async (req, res) => {
     console.log("Coookies"+JSON.stringify(req.cookies));
-    console.log(req.body);
+    console.log(req);
     const currentUserId = req.session.userId;
     const movieId = req.body.movieId;
     let user;

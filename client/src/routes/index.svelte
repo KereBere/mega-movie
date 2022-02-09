@@ -12,8 +12,10 @@
 					popular: data.results
 				}
 			};
-		}
-	} 
+		} 
+		 
+	}
+	
 </script>
 
 <script>
@@ -22,8 +24,9 @@
 	import SearchMovies from '../components/SearchMovies.svelte';
 	export let popular;
 	import { fly } from 'svelte/transition';
-
+	import { session } from '$app/stores';
 </script>
 
+{JSON.stringify($session)}
 <SearchMovies />
-<PopularMovies {popular}/>
+<PopularMovies {popular} />
