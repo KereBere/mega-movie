@@ -1,13 +1,24 @@
 import { Request, RequestHandler, Response } from "express";
 import { User } from "../entity/User";
 import jwt from "jsonwebtoken";
+import { Movie } from "../entity/Movie";
+import { Actor } from "../entity/Actor";
 const { OAuth2Client } = require("google-auth-library");
-const client = new OAuth2Client(process.env.CLIENT_ID);
 declare module "express-session" {
   interface SessionData {
     userId: string;
   }
 }
+
+const createToken = (userId: string, username: string) => {
+  return jwt.sign(
+    { userId: userId, username: username },
+    process.env.ACCESS_TOKEN_SECRET,
+    {
+      expiresIn: "1h",
+    }
+  );
+};
 class UserController {
   public static newUser: RequestHandler = async (req, res) => {
     console.log(req.body);
@@ -30,6 +41,7 @@ class UserController {
   };
 
   public static login: RequestHandler = async (req, res) => {
+    console.log("user log giriş");
     const { email, password } = req.body;
     console.log(req.body);
     if (!(email && password)) {
@@ -53,10 +65,17 @@ class UserController {
         .status(401)
         .json({ success: false, error: "Invalid password" });
     }
-    createSendTokenAndCookie(user.id, user.username, req, res);
-    return res
-      .status(201)
-      .json({ success: true, message: "Login Successfull" });
+    const id = user.id;
+    const favMovies = await Movie.find({ where: { user: user } });
+    // const favActors = await Actor.find({ where: { user: user } });
+    const token = createToken(user.id, user.username);
+    console.log(token);
+    return res.status(201).json({
+      favMovies,
+      success: true,
+      message: "Login Successfull",
+      user: { username: user.username, email: user.email, token: token },
+    });
   };
 
   public static googleNewUSer: RequestHandler = async (req, res) => {
@@ -67,7 +86,10 @@ class UserController {
       .then((user) => {
         if (user) {
           console.log("Google user exist");
-          createSendTokenAndCookie(user.id, user.username, req, res);
+          const token = createToken(user.id, user.username);
+          return res
+            .status(201)
+            .json({ success: true, message: "Login Successfull", user, token });
         } else {
           const user = new User();
           user.name = name;
@@ -76,7 +98,10 @@ class UserController {
           user.createddAt = new Date();
           User.save(user);
           console.log("Google user created");
-          createSendTokenAndCookie(user.id, user.username, req, res);
+          const token = createToken(user.id, user.username);
+          return res
+            .status(201)
+            .json({ success: true, message: "Login Successfull", user, token });
         }
       })
       .catch((error) => {
@@ -92,26 +117,3 @@ class UserController {
   };
 }
 export default UserController;
-function createSendTokenAndCookie(
-  userId: string,
-  username: string,
-  req: Request,
-  res: Response
-) {
-  const token = jwt.sign(
-    { userId: userId, username: username },
-    process.env.ACCESS_TOKEN_SECRET,
-    {
-      expiresIn: "1h",
-    }
-  );
-  req.session.userId = userId;
-  console.log("cookie send");
-  console.log("token: " + token);
-  res.cookie("sessionToken", token, {
-    httpOnly: true,
-    maxAge: 30 * 24 * 60 * 60,
-    secure: false,
-  });
-  console.log(req.cookies["session-token"]);
-}

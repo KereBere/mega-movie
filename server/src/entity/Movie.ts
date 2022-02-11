@@ -20,6 +20,18 @@ export class Movie extends BaseEntity {
   @Column()
   movieId: string;
 
+  @Column()
+  originalTile: string;
+
+  @Column("longtext")
+  overview: string;
+
+  @Column()
+  posterPath: string;
+
+  @Column()
+  backdropPath: string;
+
   @ManyToOne(() => User, (user) => user.favMovies, { eager: true })
   user: User;
 

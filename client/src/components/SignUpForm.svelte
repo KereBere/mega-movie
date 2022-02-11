@@ -5,6 +5,7 @@
 	let errors = [];
 	const submitForm = async (res) => {
 		try {
+			console.log("üye init")
 			const submit = await fetch('https://localhost:3443/user/newUser', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },

@@ -4,20 +4,18 @@ import { RequestHandler } from "express";
 
 class MovieController {
   public static newFavMovie: RequestHandler = async (req, res) => {
-    console.log("Coookies"+JSON.stringify(req.cookies));
-    console.log(req);
     const currentUserId = req.session.userId;
-    const movieId = req.body.movieId;
+
+    const { movieId, originalTile, overview, posterPath, backdropPath } =
+      req.body;
     let user;
     try {
       user = await User.findOneOrFail(currentUserId);
     } catch (error) {
-      return res
-        .status(404)
-        .json({
-          success: false,
-          error: "Please sign in for adding your fav movies.",
-        });
+      return res.status(404).json({
+        success: false,
+        error: "Please sign in for adding your fav movies.",
+      });
     }
     const moviebDB = await Movie.findOne({
       where: { user: user, movieId: movieId },
@@ -26,15 +24,19 @@ class MovieController {
       Movie.delete(moviebDB);
       return res
         .status(200)
-        .json({ success: false, true: "Movie removed from favs" });
+        .json({ success: true, true: "Movie removed from favs" });
     }
     const movie = new Movie();
     movie.movieId = movieId;
+    movie.originalTile = originalTile;
+    movie.overview = overview;
+    movie.posterPath = posterPath;
+    movie.backdropPath = backdropPath;
     movie.user = user;
     try {
       await Movie.save(movie);
     } catch (error) {
-      console.log("movie could not saved");
+      console.log(error);
       return res
         .status(500)
         .json({ success: false, error: "Sorry, we could not save the movie" });
@@ -43,17 +45,17 @@ class MovieController {
       .status(201)
       .json({ success: true, message: "Movie saved to favorites" });
   };
-  public static deleteFavMovie: RequestHandler = (req, res) => {
-    const id = req.params.id;
-    let movie;
-    try {
-      movie = Movie.findOneOrFail(id);
-    } catch (error) {
-      res.status(404).send("Can not delete from favorite movies");
-    }
-    Movie.delete(id);
-    res.status(200).send("post deleted");
-  };
+  // public static deleteFavMovie: RequestHandler = (req, res) => {
+  //   const id = req.params.id;
+  //   let movie;
+  //   try {
+  //     movie = Movie.findOneOrFail(id);
+  //   } catch (error) {
+  //     res.status(404).send("Can not delete from favorite movies");
+  //   }
+  //   Movie.delete(id);
+  //   res.status(200).send("post deleted");
+  // };
 
   public static getAllMoviesByUser: RequestHandler = async (req, res) => {
     const currentUserId = req.session.userId;

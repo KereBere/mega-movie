@@ -1,14 +1,23 @@
 <script>
+	import { onMount } from 'svelte';
 	import SocialAuth from './SocialAuth.svelte';
+	import { goto } from '$app/navigation';
+	import { userData, isAuth, favMovies  } from '../stores';
 	let email, password;
 	let message;
 	let error;
+	onMount(async () => {
+		if (isAuth) {
+			goto('/auth/signin');
+		}
+	});
 	const submitForm = async (res) => {
-		message = "";
-		error = "";
+		message = '';
+		error = '';
 		try {
+			console.log('giriş init');
 			const submit = await fetch('https://localhost:3443/user/login', {
-				credentials: "same-origin",
+				credentials: 'same-origin',
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
@@ -16,12 +25,15 @@
 					password
 				})
 			});
+			console.log(submit);
 			const data = await submit.json();
 			if (data.success) {
 				message = data.message;
-				setTimeout(() => {
-					window.location.href = "/"
-				}, 2000);
+				console.log(data);
+				$userData = JSON.stringify(data.user);
+				$isAuth = 1;
+			 	$favMovies = data.favMovies.map(a => +a.movieId); 
+				console.log(typeof $favMovies)
 			} else {
 				error = data.error;
 				throw new Error('something went wrong. IDK neither');
@@ -51,15 +63,15 @@
 
 		<div class="right" id="right">
 			<div class="error-con">
-				{#if error  }
+				{#if error}
 					<p class="error-p">
 						{'! ' + error}
 					</p>
-				{/if} 
+				{/if}
 				{#if message}
-				<p class="success-p">
-					{'! ' +message +"Redirecting to homepage"}
-				</p>
+					<p class="success-p">
+						{'! ' + message + 'Redirecting to homepage'}
+					</p>
 				{/if}
 			</div>
 			<SocialAuth />

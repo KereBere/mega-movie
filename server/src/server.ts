@@ -14,9 +14,9 @@ import session from "express-session";
 // import { TypeormStore } from "typeorm-store";
 // import { Session } from "./entity/session";
 
-const port = process.env.PORT || 3443;
 createConnection()
   .then(async () => {
+    const port = 3443;
     const app = express();
 
     const httpOptions = {
