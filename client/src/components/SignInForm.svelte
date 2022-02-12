@@ -26,13 +26,12 @@
 					password
 				})
 			});
-			console.log(submit);
 			const data = await submit.json();
 			if (data.success) {
 				$userData =data.user;
 				message = data.message;
-				console.log($userData)
 				$userData = data.user;
+				console.log(data.movies)
 				$isAuth = 1;
 				$favMovies = data.favMovies.map((a) => +a.id);
 				$popular = data.favMovies;

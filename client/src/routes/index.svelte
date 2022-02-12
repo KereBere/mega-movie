@@ -31,4 +31,4 @@
 
 <!-- {JSON.stringify($session)} -->
 <SearchMovies />
-<PopularMovies {popular} {title} />
+<PopularMovies {popular} {title} /> 

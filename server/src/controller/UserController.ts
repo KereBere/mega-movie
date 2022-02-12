@@ -2,8 +2,6 @@ import { Request, RequestHandler, Response } from "express";
 import { User } from "../entity/User";
 import jwt from "jsonwebtoken";
 import { Movie } from "../entity/Movie";
-import { Actor } from "../entity/Actor";
-const { OAuth2Client } = require("google-auth-library");
 declare module "express-session" {
   interface SessionData {
     userId: string;
@@ -66,11 +64,13 @@ class UserController {
         .json({ success: false, error: "Invalid password" });
     }
     const id = user.id;
+    req.session.userId = id;
     const favMovies = await Movie.find({ where: { user: user } });
-    // const favActors = await Actor.find({ where: { user: user } });
     const token = createToken(user.id, user.username);
-    console.log(token);
+    const allMovies = await Movie.find({ order: { user: "ASC" } });
+    console.log(allMovies);
     return res.status(201).json({
+      allMovies,
       favMovies,
       success: true,
       message: "Login Successfull",
@@ -88,38 +88,67 @@ class UserController {
     console.log("gogigo");
     const { name, email } = req.user;
     console.log("gogigo");
-    await User.findOne({ where: { email } })
-      .then((user) => {
-        if (user) {
-          console.log("Google user exist");
-          const token = createToken(user.id, user.username);
-          return res
-            .status(201)
-            .json({ success: true, message: "Login Successfull", user, token });
-        } else {
-          const user = new User();
-          user.name = name;
-          user.email = email;
-          user.username = name.split(" ").slice(-1).join(" ");
-          user.createddAt = new Date();
-          User.save(user);
-          console.log("Google user created");
-          const token = createToken(user.id, user.username);
-          return res
-            .status(201)
-            .json({ success: true, message: "Login Successfull", user, token });
-        }
-      })
-      .catch((error) => {
-        res.status(404).send(error);
-        console.log(error);
-      });
+    let user;
+    try {
+      user = await User.findOneOrFail({ where: { email: email } });
+      if (user) {
+        req.session.userId = user.id;
+        const favMovies = await Movie.find({ where: { user: user } });
+        // const favActors = await Actor.find({ where: { user: user } });
+        const token = createToken(user.id, user.username);
+        console.log(token);
+        return res.status(201).json({
+          favMovies,
+          success: true,
+          message: "Login Successfull",
+          user: {
+            name: user.name,
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            token: token,
+          },
+        });
+      } else {
+        const user = new User();
+        user.name = name;
+        user.email = email;
+        user.username = name.split(" ").slice(-1).join(" ");
+        user.createddAt = new Date();
+        await User.save(user);
+        console.log("Google user created");
+        req.session.userId = user.id;
+        const token = createToken(user.id, user.username);
+        return res.status(201).json({
+          success: true,
+          message: "Login Successfull",
+          user: {
+            name: user.name,
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            token: token,
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   public static facebookLogin: RequestHandler = async (req, res) => {
     console.log("hehe");
     console.log(req.body);
     console.log(req.cookies);
     res.json("dwadwadwd");
   };
+
+  public static logout: RequestHandler = (req, res) => {
+    console.log("logged out");
+    req.session.userId = null;
+    res.clearCookie("token");
+    res.status(200).send({ success: true, message: "Logged out succesfully" });
+  };
 }
+
 export default UserController;

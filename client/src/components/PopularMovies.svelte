@@ -1,11 +1,11 @@
 <script>
+	import {goto} from "$app/navigation"
 	import MovieCard from './MovieCard.svelte';
 	export let popular;
-	export let title
-	export let showMovies
-</script>
-
-<a on:click={showMovies}><h3>{title}</h3></a>
+	export let title 
+	</script>
+	
+	<a><h3>{title}</h3></a>
 <div class="popular-movies">
 	{#each popular as movie}
 		<MovieCard {movie} />

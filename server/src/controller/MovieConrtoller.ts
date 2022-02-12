@@ -93,11 +93,10 @@ class MovieController {
     console.log(movies);
   };
   public static getFavMovies: RequestHandler = async (req, res) => {
-    const currentUserId = req.session.userId;
-    console.log(currentUserId);
-    const movies: Movie[] = await Movie.find({
-      where: { user: currentUserId },
-    });
+    let movies;
+    try {
+      movies = await Movie.find();
+    } catch (error) {}
     console.log(movies);
   };
 }

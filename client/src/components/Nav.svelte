@@ -2,16 +2,18 @@
 import { goto } from '$app/navigation';
 
     import{isAuth, favMovies, userData, popular} from "../stores"
-    export const logout =()=> {
-        console.log("zuzu")
+    export const logout = async()=> {
         $isAuth = "";
         $favMovies ="";
         $userData="";
         $popular=""
+        const submit = fetch("https://localhost:3443/user/logout");
+        const data = await submit.json()
     }
 </script>
 <nav>
     <a class="logo" href="/"><img src="/logom.png" alt="">Popcorn Movie</a>
+    <a href="/auth/signin">Users' Favs</a>  
     {#if $isAuth}
     <a href="/profile/profile">Profile</a>
     {/if}

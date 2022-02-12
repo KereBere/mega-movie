@@ -14,6 +14,7 @@ router.post(
   UserController.newUser
 );
 router.post("/login", UserController.login); 
+router.get("/logout", UserController.logout); 
 
 router.post("/google", checkGoogleUser, UserController.googleNewUSer);
 router.post("/facebook-login", UserController.facebookLogin);

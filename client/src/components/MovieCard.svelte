@@ -78,7 +78,9 @@
 		top: 25px;
 		left: 20px;
 		color: #fbd43f;
+		width: 15px;
 	}
+
 	.is-hidden {
 		position: absolute;
 		cursor: pointer;
@@ -97,12 +99,15 @@
 		right: 25px;
 		z-index: 1;
 	}
-	.fas:hover {
+	.heart:hover {
 		color: red;
 		transform: scale(1.05);
 	}
 	.fas {
 		font-size: 30px;
+	}
+	.fas:hover{
+		color: red;
 	}
 	.fav {
 		font-size: 30px;
@@ -134,5 +139,11 @@
 		flex-direction: column;
 		justify-content: space-around;
 		padding: 1rem;
+	}
+	.is-visible:hover{
+		color: #837334;
+	}
+	.is-hidden:hover{
+		color: #837334;
 	}
 </style>
