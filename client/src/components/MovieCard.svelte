@@ -5,7 +5,6 @@
 	export let movie;
 	const newFavMovie = async (res) => {
 		try {
-			console.log('hehe');
 			const submit = await fetch('https://localhost:3443/movie/newFavMovie', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
@@ -18,15 +17,12 @@
 					release_date: movie.release_date
 				})
 			});
-			console.log(movie);
 			const data = await submit.json();
-			console.log(data);
 			$favMovies = data.favMovies.map((a) => a.id);
 			$popular = data.favMovies;
 		} catch (error) {}
 	};
 	const visibleToggle = async () => {
-		console.log('hehe');
 		try {
 			const submit = await fetch('https://localhost:3443/movie/visibletoggle', {
 				method: 'POST',
@@ -36,7 +32,6 @@
 					user: $userData.id
 				})
 			});
-			console.log(movie);
 
 			const data = await submit.json();
 			$popular = data.favMovies;

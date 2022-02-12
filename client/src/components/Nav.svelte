@@ -13,12 +13,16 @@ import { goto } from '$app/navigation';
 </script>
 <nav>
     <a class="logo" href="/"><img src="/logom.png" alt="">Popcorn Movie</a>
-    <a href="/auth/signin">Users' Favs</a>  
+    <a href="/favmovies/">Users' Favs</a>  
     {#if $isAuth}
     <a href="/profile/profile">Profile</a>
     {/if}
+    {#if !$isAuth}
     <a href="/auth/signin">Sign in</a>
+    {/if}
+    {#if !$isAuth}
     <a href="/auth/signup">Sign up</a>
+    {/if}
     {#if $isAuth}
     <a on:click={logout}>Logout</a>
     {/if}

@@ -28,7 +28,6 @@
 		console.log('zeze');
 		FB.login(
 			(response) => {
-				console.log(response)
 				const {
 					authResponse: { accessToken, userID }
 				} = response;

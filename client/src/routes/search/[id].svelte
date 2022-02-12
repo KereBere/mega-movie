@@ -4,7 +4,6 @@
 			`https://api.themoviedb.org/3/search/movie?api_key=efaf0b9bf33d3ed3967457d165031a0b&language=en-US&query=${params.id}&page=1&include_adult=true`
 		);
 		const data = await res.json();
-		console.log(data);
 		if (res.ok) {
 			return {
 				props: {

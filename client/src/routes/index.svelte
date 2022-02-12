@@ -25,8 +25,6 @@
 	export let popular;
 	export let title = "Popular Movies"
 	import { fly } from 'svelte/transition';
-	// import { session } from '$app/stores';
-	console.log(popular)
 </script>
 
 <!-- {JSON.stringify($session)} -->

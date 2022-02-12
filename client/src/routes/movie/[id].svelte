@@ -37,12 +37,7 @@
 					release_date: movie.release_date
 				})
 			});
-			console.log(movie)
 			const data = await submit.json()
-			console.log(data)
-		 
- 
-		 
 		} catch (err) {
 			//  fas fa-heart
 		}

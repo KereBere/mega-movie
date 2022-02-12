@@ -14,7 +14,6 @@
 	let errors = [];
 	const submitForm = async (res) => {
 		try {
-			console.log("üye init")
 			const submit = await fetch('https://localhost:3443/user/newUser', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
@@ -26,7 +25,6 @@
 					password2
 				})
 			});
-			// res.status >= 400 ? console.log("accept") : console.log("catck Error")
 			const data = await submit.json();
 			if (data.success) {
 				message = data.message;

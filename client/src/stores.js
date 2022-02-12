@@ -24,8 +24,17 @@ favMovies.subscribe((value) => {
 		window.localStorage.setItem('favMovies', JSON.stringify(value));
 	}
 });
-let allLocalMovies = browser && window.localStorage.getItem('popular');
-export let popular = writable(JSON.parse(allLocalMovies));
+ 
+// let allLocalMovies = browser && window.localStorage.getItem('allMovies');
+// export let allMovies = writable(JSON.parse(allLocalMovies));
+// allMovies.subscribe((value) => {
+// 	if (browser) {
+// 		window.localStorage.setItem('allMovies', JSON.stringify(value));
+// 	}
+// });
+
+let allLocalMoviesByUser = browser && window.localStorage.getItem('popular');
+export let popular = writable(JSON.parse(allLocalMoviesByUser));
 popular.subscribe((value) => {
 	if (browser) {
 		window.localStorage.setItem('popular', JSON.stringify(value));

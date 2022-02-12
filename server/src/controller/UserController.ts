@@ -66,9 +66,13 @@ class UserController {
     const id = user.id;
     req.session.userId = id;
     const favMovies = await Movie.find({ where: { user: user } });
+    console.log(favMovies);
     const token = createToken(user.id, user.username);
-    const allMovies = await Movie.find({ order: { user: "ASC" } });
-    console.log(allMovies);
+    const allMovies = await (
+      await Movie.find({ order: { user: "ASC" } })
+    ).map((x) => {
+      return [x.title, x.id, x.poster_path, x.user.email, x.user.name];
+    });
     return res.status(201).json({
       allMovies,
       favMovies,
@@ -96,8 +100,11 @@ class UserController {
         const favMovies = await Movie.find({ where: { user: user } });
         // const favActors = await Actor.find({ where: { user: user } });
         const token = createToken(user.id, user.username);
+        const allMovies = await Movie.find({ order: { user: "ASC" } });
+
         console.log(token);
         return res.status(201).json({
+          allMovies,
           favMovies,
           success: true,
           message: "Login Successfull",
@@ -152,3 +159,40 @@ class UserController {
 }
 
 export default UserController;
+
+function sortUsers(usersData) {
+  const result = [];
+  const userArr = usersData[0];
+
+  // keep track of the index we are on
+  let currIdx = 0;
+  // a array to hold our user array information in
+  let tempArr = [];
+  // keep track of the current user we are storing info for
+  let prevUser = userArr[userArr.length - 1];
+
+  while (currIdx < usersData.length) {
+    // figure out if we are on a new user or not
+    const userArray = usersData[currIdx];
+    const currentUser = userArray[userArray.length - 1];
+    if (currentUser !== prevUser) {
+      prevUser = currentUser;
+      result.push(tempArr);
+
+      tempArr = [];
+    }
+
+    tempArr.push([...userArray]);
+
+    // on the last index, push what we have
+    // in our temp array
+    if (currIdx === usersData.length - 1) {
+      result.push(tempArr);
+    }
+
+    // move forward in the array
+    currIdx++;
+  }
+
+  return result;
+}

@@ -1,38 +1,25 @@
-<!-- <script>
+<script>
 	export let movie;
 </script>
 
 <div class="fav-movie-card">
-	<a sveltekit:prefetch sveltekit:noscroll href={'/movie/' + movie.id}>
-		<img src={'https://image.tmdb.org/t/p/w500' + movie.poster_path} alt={movie.title} /></a
+	<a sveltekit:prefetch sveltekit:noscroll href={'/movie/' + movie[1]}>
+		<img src={'https://image.tmdb.org/t/p/w500' + movie[2]} alt={movie[0]} /></a
 	>
 	<div class="description">
-		<h2>{movie.title}</h2>
 	</div>
 </div>
 
 <style>
 	.fav-movie-card {
-		position: relative;
-		display: flex;
-		max-width: 100;
-		flex-direction: column;
-		justify-content: space-around;
-		padding: 1rem;
+		margin: 15px;
+		word-wrap: break-word;
 	}
-	img {
-		width: 100%;
-		object-fit: cover;
-		border-radius: 1rem;
-		margin-bottom: 1rem;
+	.fav-movie-card:hover{
+		transform: scale(1.05);
 	}
-	h2 {
-		font-size: 0.9rem;
+	img{
+	 width: 125px;
+	 border-radius: 15px;
 	}
-	.description {
-		height: 5vh;
-	}
-	p {
-		font-size: 0.7rem;
-	}
-</style> -->
+</style>

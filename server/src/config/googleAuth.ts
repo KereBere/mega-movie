@@ -8,7 +8,6 @@ declare module "express-serve-static-core" {
   }
 }
 export const checkGoogleUser: RequestHandler = (req, res, next) => {
-  console.log(req.cookies["session-token"]);
   console.log("Goohe config entered");
   const token = req.body.token;
   const user = { name: "", email: "", given_name: "", family_name: "" };

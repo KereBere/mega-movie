@@ -1,5 +1,4 @@
 <script>
-	 
 	import { onMount } from 'svelte';
 	import SocialAuth from './SocialAuth.svelte';
 	import { goto } from '$app/navigation';
@@ -16,7 +15,6 @@
 		message = '';
 		error = '';
 		try {
-			console.log('giriş init');
 			const submit = await fetch('https://localhost:3443/user/login', {
 				credentials: 'same-origin',
 				method: 'POST',
@@ -28,10 +26,11 @@
 			});
 			const data = await submit.json();
 			if (data.success) {
+				console.log(data)
 				$userData =data.user;
 				message = data.message;
-				$userData = data.user;
-				console.log(data.movies)
+				// $allMovies = data.allMovies
+				$userData = data.user; 
 				$isAuth = 1;
 				$favMovies = data.favMovies.map((a) => +a.id);
 				$popular = data.favMovies;

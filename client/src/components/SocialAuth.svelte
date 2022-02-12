@@ -27,12 +27,10 @@
 					token : id_token
 				})
 			});
-			console.log(submit);
 			const data = await submit.json();
 			if (data.success) {
-				console.log(data)
+				// $allMovies= data.allMovies
 				$userData =data.user;
-				console.log($userData)
 				$userData = data.user;
 				$isAuth = 1;
 				$favMovies = data.favMovies.map((a) => +a.id);
