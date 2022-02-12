@@ -1,6 +1,7 @@
 <script>
-	import { favMovies } from '../stores';
-
+	import { page } from '$app/stores';
+	export let pageName = $page.url.pathname
+	import { favMovies, popular, userData, isAuth } from '../stores';
 	export let movie;
 	const newFavMovie = async (res) => {
 		try {
@@ -9,30 +10,51 @@
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
-					movieId: movie.id,
-					originalTile: movie.original_title,
+					id: movie.id,
+					title: movie.title,
 					overview: movie.overview,
-					posterPath: movie.poster_path,
-					backdropPath: movie.backdrop_path
+					poster_path: movie.poster_path,
+					backdrop_path: movie.backdrop_path,
+					release_date: movie.release_date
 				})
 			});
-			if ($favMovies.includes(movie.id)) {
-				$favMovies = $favMovies.filter((id) => id != movie.id);
-			} else {
-				let arr = [...$favMovies, movie.id];
-				favMovies.set(arr);
-			}
+			console.log(movie);
+			const data = await submit.json();
+			console.log(data);
+			$favMovies = data.favMovies.map((a) => a.id);
+			$popular = data.favMovies;
+		} catch (error) {}
+	};
+	const visibleToggle = async () => {
+		console.log('hehe');
+		try {
+			const submit = await fetch('https://localhost:3443/movie/visibletoggle', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					movieuuid: movie.uuid,
+					user: $userData.id
+				})
+			});
+			console.log(movie);
 
 			const data = await submit.json();
-			message = data;
-			console.log('data' + data);
-		} catch (err) {
-			//  fas fa-heart
+			$popular = data.favMovies;
+		} catch (error) {
+			console.log(error);
 		}
 	};
 </script>
 
 <div class="movie-card">
+	{#if pageName == "/profile/profile"}
+		{#if movie.isVisible}
+			<i on:click={visibleToggle} class="is-visible fas fa-eye" />
+		{:else}
+			<i on:click={visibleToggle} class="is-hidden fa-solid fa-eye-slash fas" />
+		{/if}
+	{/if}
+	<!-- svelte-ignore a11y-missing-attribute -->
 	<a class="heart" on:click={newFavMovie}
 		><i
 			class={JSON.stringify($favMovies).includes(movie.id)
@@ -45,11 +67,29 @@
 	>
 	<div class="description">
 		<h2>{movie.title}</h2>
-		<p>{movie.release_date}</p>
 	</div>
 </div>
 
 <style>
+	.is-visible {
+		position: absolute;
+		cursor: pointer;
+		z-index: 1;
+		top: 25px;
+		left: 20px;
+		color: #fbd43f;
+	}
+	.is-hidden {
+		position: absolute;
+		cursor: pointer;
+		z-index: 1;
+		top: 25px;
+		left: 20px;
+		color: #3f3e3a;
+	}
+	h2 {
+		text-align: center;
+	}
 	.heart {
 		position: absolute;
 		cursor: pointer;
@@ -59,7 +99,7 @@
 	}
 	.fas:hover {
 		color: red;
-		transform: scale(1.1);
+		transform: scale(1.05);
 	}
 	.fas {
 		font-size: 30px;
@@ -90,6 +130,7 @@
 	.movie-card {
 		position: relative;
 		display: flex;
+		max-width: 250px;
 		flex-direction: column;
 		justify-content: space-around;
 		padding: 1rem;

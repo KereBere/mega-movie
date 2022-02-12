@@ -1,10 +1,11 @@
 <script>
 	import MovieCard from './MovieCard.svelte';
 	export let popular;
-	
+	export let title
+	export let showMovies
 </script>
 
-<h3>Popular Movies</h3>
+<a on:click={showMovies}><h3>{title}</h3></a>
 <div class="popular-movies">
 	{#each popular as movie}
 		<MovieCard {movie} />
@@ -16,9 +17,9 @@
 		padding: 0 1rem;
 	}
 	.popular-movies {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
-		grid-column-gap: 1rem;
-		grid-row-gap: 1rem;
+		display: flex; 
+		width: 100%;
+		justify-content: center;
+		flex-wrap: wrap;
 	}
 </style>

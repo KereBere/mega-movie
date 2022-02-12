@@ -10,10 +10,10 @@ isAuth.subscribe((value) => {
 });
 
 const localUser = browser && window.localStorage.getItem('userData');
-export const userData = writable(localUser);
+export let userData = writable(JSON.parse(localUser));
 userData.subscribe((value) => {
 	if (browser) {
-		window.localStorage.setItem('userData', value);
+		window.localStorage.setItem('userData', JSON.stringify(value));
 	}
 });
 
@@ -22,6 +22,13 @@ export let favMovies = writable(JSON.parse(localMovies));
 favMovies.subscribe((value) => {
 	if (browser) {
 		window.localStorage.setItem('favMovies', JSON.stringify(value));
+	}
+});
+let allLocalMovies = browser && window.localStorage.getItem('popular');
+export let popular = writable(JSON.parse(allLocalMovies));
+popular.subscribe((value) => {
+	if (browser) {
+		window.localStorage.setItem('popular', JSON.stringify(value));
 	}
 });
 

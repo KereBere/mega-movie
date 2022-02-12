@@ -1,4 +1,13 @@
-<script>
+<script>	 
+	import { onMount } from 'svelte';
+	import { isAuth } from '../stores';
+	import { goto } from '$app/navigation';
+
+	onMount(async () => {
+		if ($isAuth) {
+			goto('/');
+		}
+	});
 	import SocialAuth from './SocialAuth.svelte';
 	let name, username, email, password, password2;
 	let message;
@@ -75,6 +84,8 @@
 			</div>
 			<SocialAuth />
 			<a class="have-acc" href="/auth/signin"><p>Already have an account? Sign in!</p></a>
+			<a class="have-acc" href="/"><p>Or continue without login!</p></a>
+
 		</div>
 		<div class="or" id="or">OR</div>
 	</div>

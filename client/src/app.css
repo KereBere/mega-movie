@@ -3,7 +3,9 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    /* outline: red solid 1px ; */
     font-family: 'Comfortaa', cursive;}
+    
 body{
     margin: 0 10%;
 }
@@ -17,6 +19,6 @@ a{
 
 }
 a:hover{
-    color: aqua;
+    color:  #fcca04;
     transform: scale(1.05);
 }

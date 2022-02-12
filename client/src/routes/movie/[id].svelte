@@ -1,7 +1,9 @@
 <script context="module">
 	export async function load({ fetch, params }) {
 		const res = await fetch(
-			`https://api.themoviedb.org/3/movie/${params.id}?api_key=${import.meta.env.VITE_API}&language=en-US`
+			`https://api.themoviedb.org/3/movie/${params.id}?api_key=${
+				import.meta.env.VITE_API
+			}&language=en-US`
 		);
 		const movieDetail = await res.json();
 		if (res.ok) {
@@ -10,45 +12,121 @@
 					movieDetail
 				}
 			};
-		}else {
-			return "HEHE"
+		} else {
+			return 'HEHE';
 		}
 	}
 </script>
 
 <script>
-	import {fly} from "svelte/transition"
+	import { fly } from 'svelte/transition';
 	export let movieDetail;
+	let comment;
+	const newComment = async (res) => {
+		try {
+			console.log('hehe');
+			const submit = await fetch('https://localhost:3443/comment/newcomment', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					id : movie.id,
+					title: movie.title,
+					overview: movie.overview,
+					poster_path: movie.poster_path,
+					backdrop_path: movie.backdrop_path,
+					release_date: movie.release_date
+				})
+			});
+			console.log(movie)
+			const data = await submit.json()
+			console.log(data)
+		 
+ 
+		 
+		} catch (err) {
+			//  fas fa-heart
+		}
+	};
 </script>
 
-<div class="movie-details" in:fly={{y:50 , duration: 500, delay:500}} out:fly={{  duration: 500}}>
+<div
+	class="movie-details"
+	in:fly={{ y: 50, duration: 500, delay: 500 }}
+	out:fly={{ duration: 500 }}
+>
 	<div class="img-container">
 		<img
-			src={'https://image.tmdb.org/t/p/original' + movieDetail.backdrop_path}
+			src={'https://image.tmdb.org/t/p/original' + movieDetail.poster_path}
 			alt={movieDetail.title}
 		/>
 	</div>
 	<div class="txt-container">
-		<h1>{movieDetail.title}</h1>
+		<h2>{movieDetail.title}</h2>
 		<p class="overview">
 			{movieDetail.overview}
 		</p>
 		<p>
-			<span>Release Date</span>
+			<span>Release Date :</span>
 			{movieDetail.release_date} <br />
-			<span
-				>Budget:<span />${movieDetail.budget} <br />
-				<span>Rating: </span>
-				{movieDetail.vote_avarage}<br />
-				<span>Runtime: </span>
-				{movieDetail.runtime}mins
+			<span>Budget :</span> ${' ' + movieDetail.budget} <br />
+			<span>Runtime :</span>{movieDetail.runtime}mins
 		</p>
 	</div>
 </div>
-	
+
+<form class="comment-form" action="" method="post">
+	 <textarea name="comment" id="" cols="30" rows="10" bind:value ={comment}></textarea>
+	 <button type="submit" on:click={newComment}>Send</button>
+</form>
+
 <style>
-	img{
-		width: 100%;
-		border-radius: 25px;
+	h2{
+		text-align: center;
 	}
+	.comment-form{
+		display: flex;
+		height: 125px;
+		flex-direction: column;
+		margin: 20px 0;
+		font-size: 14px;
+		font-weight: 400px;
+	}
+	textarea{
+		padding: 10px;
+	}
+	button{
+		margin: 10px 0 0 auto;
+		width: 25%;
+		background-color: #fcca04;
+		border-radius: 10px;
+		font-size: 18px;
+	}
+	button:hover{
+		background-color: #b4a057;;
+	}
+	p {
+		margin-top: 13px;
+		padding: 10px 10px;
+	}
+	span {
+		font-weight: bold;
+	}
+	.movie-details {
+		margin: auto;
+		display: flex;
+		width: 100%;
+	}
+	.txt-container {
+		align-items: center;
+		margin: 0 0 0 25px;
+		text-align: justify;
+	}
+	img {
+		width: 100%;
+		border-radius: 10px;
+		min-width: 300px;
+		max-width: 310px;
+	}
+ 
+	 
 </style>

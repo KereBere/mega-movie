@@ -74,7 +74,13 @@ class UserController {
       favMovies,
       success: true,
       message: "Login Successfull",
-      user: { username: user.username, email: user.email, token: token },
+      user: {
+        name: user.name,
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        token: token,
+      },
     });
   };
 

@@ -17,6 +17,9 @@ export class Comment extends BaseEntity {
   @Column()
   comment: string;
 
+  @Column()
+  commentor: string;
+
   @ManyToOne(() => User, (user) => user.comments)
   user: User;
 

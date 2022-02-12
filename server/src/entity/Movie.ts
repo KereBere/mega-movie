@@ -12,25 +12,28 @@ import { Comment } from "./Comment";
 @Entity()
 export class Movie extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
-  id: string;
+  uuid: string;
 
   @Column({ default: true })
   isVisible: boolean;
 
   @Column()
-  movieId: string;
+  id: string;
 
   @Column()
-  originalTile: string;
+  title: string;
 
   @Column("longtext")
   overview: string;
 
-  @Column()
-  posterPath: string;
+  @Column({ nullable: true })
+  poster_path: string;
+
+  @Column({ nullable: true })
+  backdrop_path: string;
 
   @Column()
-  backdropPath: string;
+  release_date: string;
 
   @ManyToOne(() => User, (user) => user.favMovies, { eager: true })
   user: User;

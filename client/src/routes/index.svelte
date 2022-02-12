@@ -6,7 +6,6 @@
 			}&language=en-US&page=1`
 		);
 		const data = await res.json();
-		console.log(data)
 		if (res.ok) {
 			return {
 				props: {
@@ -24,10 +23,12 @@
 	import PopularMovies from '../components/PopularMovies.svelte';
 	import SearchMovies from '../components/SearchMovies.svelte';
 	export let popular;
+	export let title = "Popular Movies"
 	import { fly } from 'svelte/transition';
 	// import { session } from '$app/stores';
+	console.log(popular)
 </script>
 
 <!-- {JSON.stringify($session)} -->
 <SearchMovies />
-<PopularMovies {popular} />
+<PopularMovies {popular} {title} />

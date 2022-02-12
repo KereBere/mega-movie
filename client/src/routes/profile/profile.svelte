@@ -1,46 +1,40 @@
-<script context="module">
-	export async function load({ fetch }) {
-		const res = await fetch(
-			`https://api.themoviedb.org/3/movie/popular?api_key=${
-				import.meta.env.VITE_API
-			}&language=en-US&page=1`
-		);
-		const data = await res.json();
-		if (res.ok) {
-			return {
-				props: {
-					popular: data.results 
-				}
-			};
-		} 
-	}
-	
-</script>
-
-<script>
+<script  context="module">
 	import.meta.env.VITE_API;
-	import PopularMovies from '../../components/PopularMovies.svelte'; 
-	export let popular;
+	import PopularMovies from '../../components/PopularMovies.svelte';
+	import { popular, userData } from '../../stores'; 
 	import { fly } from 'svelte/transition';
 	// import { userData} from "../../stores"
 	// import { session } from '$app/stores';
+	export const title = "Favorite Movies"
 </script>
+<script>
+	import { onMount } from 'svelte';
+	import {isAuth} from "../../stores"
+	import {goto} from "$app/navigation"
+
+	onMount(()=> {
+		if(!$isAuth){
+			goto("/auth/signin")
+		}
+	})
+	</script>
+
+
 <div class="profile">
-	 <img src="/profile.png" alt="">
-	 <ul class="user">
-		 <!-- <li>{$userData}</li> -->
-		 <li>Username</li>
-		 <li>Email</li>
-	 </ul>
-	 <a href="">Fav Movies</a>
-	 <a href="">Fav Actors</a> 
+	<img src="/profile.png" alt="" />
+	<ul class="user">
+		<li>{$userData.name}</li>
+		<li>{$userData.username}</li>
+		<li>{$userData.email}</li>
+	</ul>
+	<a href="">Fav Movies</a>
+	<a href="">Fav Actors</a>
 </div>
 
-<PopularMovies {popular}/>
-
+<PopularMovies popular={$popular} {title}  />
 
 <style>
-	.profile{
+	.profile {
 		position: relative;
 		width: 100%;
 		height: 70px;
@@ -49,7 +43,7 @@
 		align-items: center;
 		border-radius: 25px;
 	}
-	img{
+	img {
 		position: absolute;
 		left: -40px;
 		top: -15px;
@@ -57,10 +51,9 @@
 	.user {
 		margin: 0 auto 0 70px;
 	}
-	a{
+	a {
 		margin-right: 15px;
 		font-size: 15px;
 		font-weight: 700;
 	}
-
 </style>

@@ -6,6 +6,7 @@
 			console.log('User signed out.');
 		});
 	}
+	
 
 </script>
 
