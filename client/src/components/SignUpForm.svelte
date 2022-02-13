@@ -110,7 +110,7 @@
 		position: absolute;
 		top: 0;
 		left: 0;
-		background: url('http://twibbon.s3.amazonaws.com/238/63bb30c8-2649-465e-9df1-ab2f8e5f7ecc.jpg');
+		background: url('/bg.jpg');
 		background-repeat: repeat;
 		background-position: 0 0;
 		background-size: auto 100%;

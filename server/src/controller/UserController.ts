@@ -19,7 +19,6 @@ const createToken = (userId: string, username: string) => {
 };
 class UserController {
   public static newUser: RequestHandler = async (req, res) => {
-    console.log(req.body);
     const { name, username, email, password } = req.body;
     const user = new User();
     user.name = name;
@@ -34,14 +33,11 @@ class UserController {
     } catch (err) {
       return res.json({ success: false, errors: "err" });
     }
-    console.log("user created");
     return res.status(201).json({ success: true, message: "User Created" });
   };
 
   public static login: RequestHandler = async (req, res) => {
-    console.log("user log giriş");
     const { email, password } = req.body;
-    console.log(req.body);
     if (!(email && password)) {
       return res.status(400).json({
         success: false,
@@ -72,8 +68,10 @@ class UserController {
     ).map((x) => {
       return [x.title, x.id, x.poster_path, x.user.email, x.uuid, x.user.name];
     });
-    const array = sortUsers(allMovies);
-    console.log;
+    let array;
+    if (allMovies.length !== 0) {
+      array = sortUsers(allMovies);
+    }
     return res.status(201).json({
       allMovies: array,
       favMovies,
@@ -90,13 +88,14 @@ class UserController {
   };
 
   public static googleNewUSer: RequestHandler = async (req, res) => {
-    console.log("gogigo");
     const { name, email } = req.user;
-    console.log("gogigo");
     let user;
     try {
-      user = await User.findOneOrFail({ where: { email: email } });
+      user = await User.findOne({ where: { email: email } });
+      console.log(user);
       if (user) {
+        console.log("existing user");
+
         req.session.userId = user.id;
         const favMovies = await Movie.find({ where: { user: user } });
         const token = createToken(user.id, user.username);
@@ -115,8 +114,10 @@ class UserController {
             x.user.name,
           ];
         });
-        const array = sortUsers(allMovies);
-
+        let array;
+        if (allMovies.length !== 0) {
+          array = sortUsers(allMovies);
+        }
         return res.status(201).json({
           allMovies: array,
           favMovies,
@@ -137,7 +138,6 @@ class UserController {
         user.username = name.split(" ").slice(-1).join(" ");
         user.createddAt = new Date();
         await User.save(user);
-        console.log("Google user created");
         req.session.userId = user.id;
         const favMovies = await Movie.find({ where: { user: user } });
         const token = createToken(user.id, user.username);
@@ -156,7 +156,10 @@ class UserController {
             x.user.name,
           ];
         });
-        const array = sortUsers(allMovies);
+        let array;
+        if (allMovies.length !== 0) {
+          array = sortUsers(allMovies);
+        }
         return res.status(201).json({
           allMovies: array,
           favMovies,
@@ -176,15 +179,9 @@ class UserController {
     }
   };
 
-  public static facebookLogin: RequestHandler = async (req, res) => {
-    console.log("hehe");
-    console.log(req.body);
-    console.log(req.cookies);
-    res.json("dwadwadwd");
-  };
+  public static facebookLogin: RequestHandler = async (req, res) => {};
 
   public static logout: RequestHandler = (req, res) => {
-    console.log("logged out");
     req.session.userId = null;
     res.clearCookie("token");
     res.status(200).send({ success: true, message: "Logged out succesfully" });

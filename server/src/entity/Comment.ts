@@ -23,6 +23,6 @@ export class Comment extends BaseEntity {
   // @ManyToOne(() => User, (user) => user.comments)
   // user: User;
 
-  @ManyToOne(() => Movie, (movie) => movie.comments, { eager: true })
+  @ManyToOne(() => Movie, (movie) => movie.comments, { onDelete: "CASCADE" })
   movie: Movie;
 }

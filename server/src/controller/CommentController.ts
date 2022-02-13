@@ -13,8 +13,6 @@ class CommentController {
     } catch (error) {
       console.log(error);
     }
-    console.log(req.body);
-    console.log(dbMovie);
     const dbComment = new Comment();
     dbComment.comment = comment;
     dbComment.commentor = commentor;
@@ -24,11 +22,25 @@ class CommentController {
     } catch (err) {
       console.log(err);
     }
+    let commentsByMovie;
+    try {
+      commentsByMovie = await Comment.find({ where: { movie: movieId } });
+    } catch (err) {
+      console.log(err);
+    }
+    res.status(201).json({ success: true, commentsByMovie });
   };
 
-  public static getAllCommentsByMovie : RequestHandler =(req, res) => {
-     
-  } 
+  public static getAllCommentsByMovie: RequestHandler = async (req, res) => {
+    const movieUuid = req.body.movieId;
+    let commentsByMovie;
+    try {
+      commentsByMovie = await Comment.find({ where: { movie: movieUuid } });
+    } catch (err) {
+      console.log(err);
+    }
+    res.status(201).json({ success: true, commentsByMovie });
+  };
 }
 
 export default CommentController;

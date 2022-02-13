@@ -5,7 +5,7 @@ import comment from "./comment";
 const routes = Router();
 
 routes.get("/", (req: Request, res: Response) => {
-  res.status(200).send("dwankdnwkldawdwadwadandlwad");
+  res.status(200).send("Mega Movie project! Let's go");
 });
 
 routes.post("/post", (req: Request, res: Response) => {

@@ -48,6 +48,13 @@ commentMovieId.subscribe((value) => {
 		window.localStorage.setItem('commentMovieId', JSON.stringify(value) ?? '');
 	}
 });
+let commentsByMovieLocal = browser && window.localStorage.getItem('commentsByMovie');
+export let commentsByMovie = writable(JSON.parse(commentsByMovieLocal));
+commentsByMovie.subscribe((value) => {
+	if (browser) {
+		window.localStorage.setItem('commentsByMovie', JSON.stringify(value) ?? '');
+	}
+});
 
 // // get local storage
 // let storage = localStorage.getItem("userInputs");

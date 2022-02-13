@@ -27,7 +27,6 @@
 	let movieid;
 	const newComment = async (res) => {
 		try {
-			console.log('hehe');
 			const submit = await fetch('https://localhost:3443/comment/newcomment', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },

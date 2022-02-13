@@ -4,7 +4,6 @@ import { RequestHandler } from "express";
 
 class ActorController {
   public static newFavActor: RequestHandler = async (req, res) => {
-    console.log("newuser");
     const currentUserId = req.session.userId;
     let user;
     try {
@@ -19,7 +18,6 @@ class ActorController {
     try {
       await Actor.save(actor);
     } catch (error) {
-      console.log("Actor could not saved");
       return res.status(500).send("Sorry, we could not save the Actor");
     }
     res.status(201).send("Actor saved to favorites");
@@ -38,15 +36,12 @@ class ActorController {
 
   public static getAllActorsByUser: RequestHandler = async (req, res) => {
     const currentUserId = req.session.userId;
-    console.log(currentUserId);
     const actors: Actor[] = await Actor.find({
       where: { user: currentUserId },
     });
-    console.log(actors);
   };
   public static getFavActors: RequestHandler = async (req, res) => {
     const currentUserId = req.session.userId;
-    console.log(currentUserId);
     const actors: Actor[] = await Actor.find({
       where: { user: currentUserId },
     });

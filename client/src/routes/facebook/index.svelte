@@ -25,7 +25,6 @@
 		})(document, 'script', 'facebook-jssdk');
 	});
 	function loginWithFacebook() {
-		console.log('zeze');
 		FB.login(
 			(response) => {
 				const {
@@ -40,7 +39,6 @@
 					},
 					body: JSON.stringify({ accessToken, userID })
 				}).then((res) => {
-					console.log(res);
 				});
 			},
 			{ scope: 'public_profile, email' }

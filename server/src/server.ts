@@ -32,9 +32,7 @@ createConnection()
     app.use(express.urlencoded({ extended: true }));
     app.use(express.static("public"));
     app.use(express.json());
-    app.use(cookieParser());
-    // const repository = getConnection().getRepository(Session);
-    // app.use(bodyParser.json());
+    app.use(cookieParser()); 
     const session = require("express-session");
 
     app.use(

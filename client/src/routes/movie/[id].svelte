@@ -19,15 +19,14 @@
 </script>
 
 <script>
-	import { userData , commentMovieId } from '../../stores';
-
+	import { userData , commentMovieId, commentsByMovie } from '../../stores';
+	import CommentCard from '../../components/CommentCard.svelte';
 	import { fly } from 'svelte/transition';
 	export let movieDetail;
+	export let userComment = {name: "ali", comment: "dawhıhdwadhnwıoşad"}
 	let comment;
-	let movieid;
 	const newComment = async (res) => {
 		try {
-			console.log('hehe');
 			const submit = await fetch('https://localhost:3443/comment/newcomment', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
@@ -38,6 +37,11 @@
 				})
 			});
 			const data = await submit.json();
+			if (data.success) {
+				$commentsByMovie = data.commentsByMovie;
+			} else {
+				throw new Error('something went wrong. IDK neither');
+			}
 		} catch (err) {
 			//  fas fa-heart
 		}
@@ -71,11 +75,12 @@
 </div>
 
 <form class="comment-form" action="" method="post">
-	<input type="text" bind:value={movieDetail.id} name="movieid" id="">
 	<textarea name="comment" id="" cols="30" rows="10" bind:value={comment} required />
 	<button type="submit" on:click|preventDefault={newComment}>Send</button>
 </form>
-
+{#each $commentsByMovie as comment }
+	<CommentCard userComment={comment} />
+{/each}
 <style>
 	h2 {
 		text-align: center;

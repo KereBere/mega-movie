@@ -45,7 +45,6 @@ export const newUserValidation = [
           })
           .then((user) => {
             if (user) {
-              console.log(user);
               throw new Error("Username alreadu in use");
             }
             return user;
@@ -54,10 +53,8 @@ export const newUserValidation = [
   body("password")
     .not()
     .isEmpty()
-
     .custom((password, { req }) => {
       if (password !== req.body.password2) {
-        console.log("edwe");
         throw new Error("Password confirmation does not match password");
       }
       return password;

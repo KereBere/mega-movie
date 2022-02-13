@@ -1,6 +1,6 @@
 <script>
-	import {isAuth, userData, favMovies, popular, allMovies} from "../stores"
-	import {goto} from "$app/navigation"
+	import { isAuth, userData, favMovies, popular, allMovies } from '../stores';
+	import { goto } from '$app/navigation';
 	import { GoogleAuth, FacebookAuth } from '@beyonk/svelte-social-auth';
 	export function signOut() {
 		let auth2 = gapi.auth2.getAuthInstance();
@@ -8,40 +8,37 @@
 			console.log('User signed out.');
 		});
 	}
-	
-
 </script>
 
 <div class="social-con">
 	<GoogleAuth
 		clientId="1076165607566-n80j275v4u2nat71sndbltght69lr2v1.apps.googleusercontent.com"
-		on:auth-success={ async(e) => {
+		on:auth-success={async (e) => {
 			const id_token = e.detail.user.wc.id_token;
 			try {
-			console.log('giriş init');
-			const submit = await fetch('https://localhost:3443/user/google', {
-				credentials: 'same-origin',
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({
-					token : id_token
-				})
-			});
-			const data = await submit.json();
-			if (data.success) {
-				$allMovies= data.allMovies
-				$userData =data.user;
-				$userData = data.user;
-				$isAuth = 1;
-				$favMovies = data.favMovies.map((a) => +a.id);
-				$popular = data.favMovies;
-				goto('/');
-			} else {
-				throw new Error('something went wrong. IDK neither');
+				const submit = await fetch('https://localhost:3443/user/google', {
+					credentials: 'same-origin',
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						token: id_token
+					})
+				});
+				const data = await submit.json();
+				if (data.success) {
+					$allMovies = data.allMovies;
+					$userData = data.user;
+					$userData = data.user;
+					$isAuth = 1;
+					$favMovies = data.favMovies.map((a) => +a.id);
+					$popular = data.favMovies;
+					goto('/');
+				} else {
+					throw new Error('something went wrong. IDK neither');
+				}
+			} catch (err) {
+				console.log(err);
 			}
-		} catch (err) {
-			console.log(err);
-		}
 		}}
 	/>
 	<FacebookAuth
@@ -57,7 +54,7 @@
 		justify-content: space-around;
 		display: flex;
 		flex-direction: column;
-		height: 120px; 
+		height: 120px;
 		width: 100%;
 	}
 </style>

@@ -60,7 +60,6 @@ class MovieController {
     }
   };
   public static visibleToggle: RequestHandler = async (req, res) => {
-    console.log(req.body);
     const { movieuuid, user } = req.body;
     let movie;
     let isVisible;
@@ -70,7 +69,6 @@ class MovieController {
       console.log(error);
     }
     movie.isVisible == true ? (isVisible = false) : (isVisible = true);
-    console.log(isVisible);
     try {
       await Movie.createQueryBuilder()
         .update(Movie)
@@ -96,7 +94,6 @@ class MovieController {
 
   public static getAllMoviesByUser: RequestHandler = async (req, res) => {
     const currentUserId = req.session.userId;
-    console.log(currentUserId);
     const movies: Movie[] = await Movie.find({
       where: { user: currentUserId },
     });
@@ -105,8 +102,9 @@ class MovieController {
     let movies;
     try {
       movies = await Movie.find();
-    } catch (error) {}
-    console.log(movies);
+    } catch (error) {
+      console.log(error);
+    }
   };
 }
 
