@@ -1,5 +1,5 @@
 <script>
-	import {isAuth, userData, favMovies, popular} from "../stores"
+	import {isAuth, userData, favMovies, popular, allMovies} from "../stores"
 	import {goto} from "$app/navigation"
 	import { GoogleAuth, FacebookAuth } from '@beyonk/svelte-social-auth';
 	export function signOut() {
@@ -29,7 +29,7 @@
 			});
 			const data = await submit.json();
 			if (data.success) {
-				// $allMovies= data.allMovies
+				$allMovies= data.allMovies
 				$userData =data.user;
 				$userData = data.user;
 				$isAuth = 1;

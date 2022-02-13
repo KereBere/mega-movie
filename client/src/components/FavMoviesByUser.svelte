@@ -6,7 +6,7 @@
 <div class="fav-movie-con">
 <div class="profile">
     <img src="profile.png" alt="">
-    <p>{favMovies[0][4]}'s Favorite Movies</p>
+    <p>{favMovies[0][5]}'s Favorite Movies</p>
 </div>
     
     {#each favMovies as movie}

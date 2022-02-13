@@ -4,7 +4,7 @@ import { RequestHandler } from "express";
 
 class MovieController {
   public static newFavMovie: RequestHandler = async (req, res) => {
-    const currentUserId = req.session.userId;
+    const currentUserId = req.body.userId;
     console.log("hhehe");
     const { id, title, overview, poster_path, backdrop_path, release_date } =
       req.body;
@@ -81,7 +81,17 @@ class MovieController {
       console.log(error);
     }
     const favMovies = await Movie.find({ where: { user: user } });
-    res.status(201).json({ favMovies });
+    const allMovies = await (
+      await Movie.find({
+        order: { user: "ASC" },
+        where: { isVisible: true },
+      })
+    ).map((x) => {
+      return [x.title, x.id, x.poster_path, x.user.email, x.uuid, x.user.name];
+    });
+    const array = sortUsers(allMovies);
+
+    res.status(201).json({ favMovies, allMovies: array });
   };
 
   public static getAllMoviesByUser: RequestHandler = async (req, res) => {
@@ -90,7 +100,6 @@ class MovieController {
     const movies: Movie[] = await Movie.find({
       where: { user: currentUserId },
     });
-    console.log(movies);
   };
   public static getFavMovies: RequestHandler = async (req, res) => {
     let movies;
@@ -102,3 +111,40 @@ class MovieController {
 }
 
 export default MovieController;
+
+function sortUsers(usersData) {
+  const result = [];
+  const userArr = usersData[0];
+
+  // keep track of the index we are on
+  let currIdx = 0;
+  // a array to hold our user array information in
+  let tempArr = [];
+  // keep track of the current user we are storing info for
+  let prevUser = userArr[userArr.length - 1];
+
+  while (currIdx < usersData.length) {
+    // figure out if we are on a new user or not
+    const userArray = usersData[currIdx];
+    const currentUser = userArray[userArray.length - 1];
+    if (currentUser !== prevUser) {
+      prevUser = currentUser;
+      result.push(tempArr);
+
+      tempArr = [];
+    }
+
+    tempArr.push([...userArray]);
+
+    // on the last index, push what we have
+    // in our temp array
+    if (currIdx === usersData.length - 1) {
+      result.push(tempArr);
+    }
+
+    // move forward in the array
+    currIdx++;
+  }
+
+  return result;
+}

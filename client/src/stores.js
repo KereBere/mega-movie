@@ -25,19 +25,27 @@ favMovies.subscribe((value) => {
 	}
 });
  
-// let allLocalMovies = browser && window.localStorage.getItem('allMovies');
-// export let allMovies = writable(JSON.parse(allLocalMovies));
-// allMovies.subscribe((value) => {
-// 	if (browser) {
-// 		window.localStorage.setItem('allMovies', JSON.stringify(value));
-// 	}
-// });
+let allLocalMovies = browser && window.localStorage.getItem('allMovies');
+export let allMovies = writable(JSON.parse(allLocalMovies));
+allMovies.subscribe((value) => {
+	if (browser) {
+		window.localStorage.setItem('allMovies', JSON.stringify(value ?? []));
+	}
+});
 
 let allLocalMoviesByUser = browser && window.localStorage.getItem('popular');
 export let popular = writable(JSON.parse(allLocalMoviesByUser));
 popular.subscribe((value) => {
 	if (browser) {
 		window.localStorage.setItem('popular', JSON.stringify(value));
+	}
+});
+
+let commentMovieIdLocal = browser && window.localStorage.getItem('commentMovieId');
+export let commentMovieId = writable(JSON.parse(commentMovieIdLocal));
+commentMovieId.subscribe((value) => {
+	if (browser) {
+		window.localStorage.setItem('commentMovieId', JSON.stringify(value) ?? '');
 	}
 });
 

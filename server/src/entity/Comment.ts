@@ -20,8 +20,8 @@ export class Comment extends BaseEntity {
   @Column()
   commentor: string;
 
-  @ManyToOne(() => User, (user) => user.comments)
-  user: User;
+  // @ManyToOne(() => User, (user) => user.comments)
+  // user: User;
 
   @ManyToOne(() => Movie, (movie) => movie.comments, { eager: true })
   movie: Movie;

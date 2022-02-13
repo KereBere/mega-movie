@@ -5,34 +5,30 @@ import { RequestHandler } from "express";
 
 class CommentController {
   public static newComment: RequestHandler = async (req, res) => {
-    const currentMovieId = req.params.Id;
-    const currentUserId = req.session.userId;
-    let movie: Movie;
+    const { comment, movieId, commentor } = req.body;
+    let dbMovie;
+    console.log("com init");
     try {
-      movie = await Movie.findOneOrFail(currentMovieId);
+      dbMovie = await Movie.findOneOrFail(movieId);
     } catch (error) {
-      res.status(404).send("Movie not found");
-      return;
+      console.log(error);
     }
-    let user;
+    console.log(req.body);
+    console.log(dbMovie);
+    const dbComment = new Comment();
+    dbComment.comment = comment;
+    dbComment.commentor = commentor;
+    dbComment.movie = dbMovie;
     try {
-      user = User.findOneOrFail(currentUserId);
-    } catch (error) {
-      res.status(404).send("user not found");
+      await Comment.save(dbComment);
+    } catch (err) {
+      console.log(err);
     }
-    const { text } = req.body;
-    const comment = new Comment();
-    comment.user = user;
-    comment.movie = movie;
-    comment.comment = text;
-
-    try {
-      await Comment.save(comment);
-    } catch (error) {
-      res.status(500).send("Sorry, something weng wrong");
-    }
-    res.status(201).send("Comment created");
   };
+
+  public static getAllCommentsByMovie : RequestHandler =(req, res) => {
+     
+  } 
 }
 
 export default CommentController;

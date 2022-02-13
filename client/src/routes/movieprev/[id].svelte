@@ -68,13 +68,7 @@
 		</p>
 		
 	</div>
-</div>
-
-<form class="comment-form" action="" method="post">
-	<input type="text" bind:value={movieDetail.id} name="movieid" id="">
-	<textarea name="comment" id="" cols="30" rows="10" bind:value={comment} required />
-	<button type="submit" on:click|preventDefault={newComment}>Send</button>
-</form>
+</div> 
 
 <style>
 	h2 {

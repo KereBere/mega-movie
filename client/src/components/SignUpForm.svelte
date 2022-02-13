@@ -93,7 +93,7 @@
 	.error-con {
 		position: absolute;
 		top: 50px;
-		color: red;
+		color: rgb(127, 231, 127);
 		font-size: 12px;
 	}
 	.have-acc {

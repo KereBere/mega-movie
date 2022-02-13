@@ -29,8 +29,8 @@ export class User extends BaseEntity {
   @OneToMany(() => Movie, (movie) => movie.user)
   favMovies: Movie[];
 
-  @OneToMany(() => Comment, (comment) => comment.user)
-  comments: Comment[];
+  // @OneToMany(() => Comment, (comment) => comment.user)
+  // comments: Comment[];
 
   @Column()
   createddAt: Date;

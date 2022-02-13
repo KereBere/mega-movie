@@ -1,7 +1,7 @@
 import { Request, Response, Router } from "express";
 import user from "./user";
 import movie from "./movie";
-import comment from "./movie";
+import comment from "./comment";
 const routes = Router();
 
 routes.get("/", (req: Request, res: Response) => {
@@ -18,5 +18,5 @@ routes.post("/post", (req: Request, res: Response) => {
 
 routes.use("/user", user);
 routes.use("/movie", movie);
-routes.use("/movie", comment);
+routes.use("/comment", comment);
 export default routes;

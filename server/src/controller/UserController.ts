@@ -66,15 +66,16 @@ class UserController {
     const id = user.id;
     req.session.userId = id;
     const favMovies = await Movie.find({ where: { user: user } });
-    console.log(favMovies);
     const token = createToken(user.id, user.username);
     const allMovies = await (
-      await Movie.find({ order: { user: "ASC" } })
+      await Movie.find({ order: { user: "ASC" }, where: { isVisible: true } })
     ).map((x) => {
-      return [x.title, x.id, x.poster_path, x.user.email, x.user.name];
+      return [x.title, x.id, x.poster_path, x.user.email, x.uuid, x.user.name];
     });
+    const array = sortUsers(allMovies);
+    console.log;
     return res.status(201).json({
-      allMovies,
+      allMovies: array,
       favMovies,
       success: true,
       message: "Login Successfull",
@@ -98,13 +99,26 @@ class UserController {
       if (user) {
         req.session.userId = user.id;
         const favMovies = await Movie.find({ where: { user: user } });
-        // const favActors = await Actor.find({ where: { user: user } });
         const token = createToken(user.id, user.username);
-        const allMovies = await Movie.find({ order: { user: "ASC" } });
+        const allMovies = await (
+          await Movie.find({
+            order: { user: "ASC" },
+            where: { isVisible: true },
+          })
+        ).map((x) => {
+          return [
+            x.title,
+            x.id,
+            x.poster_path,
+            x.user.email,
+            x.uuid,
+            x.user.name,
+          ];
+        });
+        const array = sortUsers(allMovies);
 
-        console.log(token);
         return res.status(201).json({
-          allMovies,
+          allMovies: array,
           favMovies,
           success: true,
           message: "Login Successfull",
@@ -125,8 +139,27 @@ class UserController {
         await User.save(user);
         console.log("Google user created");
         req.session.userId = user.id;
+        const favMovies = await Movie.find({ where: { user: user } });
         const token = createToken(user.id, user.username);
+        const allMovies = await (
+          await Movie.find({
+            order: { user: "ASC" },
+            where: { isVisible: true },
+          })
+        ).map((x) => {
+          return [
+            x.title,
+            x.id,
+            x.poster_path,
+            x.user.email,
+            x.uuid,
+            x.user.name,
+          ];
+        });
+        const array = sortUsers(allMovies);
         return res.status(201).json({
+          allMovies: array,
+          favMovies,
           success: true,
           message: "Login Successfull",
           user: {

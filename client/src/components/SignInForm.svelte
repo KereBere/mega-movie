@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import SocialAuth from './SocialAuth.svelte';
 	import { goto } from '$app/navigation';
-	import { userData, isAuth, favMovies, popular } from '../stores';
+	import { userData, isAuth, favMovies, popular, allMovies } from '../stores';
 	let email, password;
 	let message;
 	let error;
@@ -26,15 +26,17 @@
 			});
 			const data = await submit.json();
 			if (data.success) {
-				console.log(data)
-				$userData =data.user;
+				console.log(data);
+				$userData = data.user;
 				message = data.message;
-				// $allMovies = data.allMovies
-				$userData = data.user; 
+				$allMovies = data.allMovies;
+				$userData = data.user;
 				$isAuth = 1;
 				$favMovies = data.favMovies.map((a) => +a.id);
 				$popular = data.favMovies;
-				goto('/');
+				setTimeout(() => {
+					goto('/');
+				}, 1000);
 			} else {
 				error = data.error;
 				throw new Error('something went wrong. IDK neither');
@@ -83,6 +85,9 @@
 </div>
 
 <style>
+	.success-p {
+		color: greenyellow;
+	}
 	.error-con {
 		position: absolute;
 		top: 50px;
@@ -123,7 +128,7 @@
 	@media (max-width: 600px) {
 		.error-con {
 			position: absolute;
-			top: 395px;
+			top: 310px;
 			left: 90px;
 			color: red;
 			font-size: 11px;

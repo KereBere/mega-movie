@@ -1,7 +1,7 @@
 <script>
 	import { page } from '$app/stores';
 	export let pageName = $page.url.pathname
-	import { favMovies, popular, userData, isAuth } from '../stores';
+	import { favMovies, popular, userData, isAuth, allMovies } from '../stores';
 	export let movie;
 	const newFavMovie = async (res) => {
 		try {
@@ -14,7 +14,8 @@
 					overview: movie.overview,
 					poster_path: movie.poster_path,
 					backdrop_path: movie.backdrop_path,
-					release_date: movie.release_date
+					release_date: movie.release_date,
+					userId: $userData.id
 				})
 			});
 			const data = await submit.json();
@@ -35,6 +36,7 @@
 
 			const data = await submit.json();
 			$popular = data.favMovies;
+			$allMovies = data.allMovies
 		} catch (error) {
 			console.log(error);
 		}
@@ -57,7 +59,7 @@
 				: 'fas fa-heart no-fav'}
 		/>
 	</a>
-	<a sveltekit:prefetch sveltekit:noscroll href={'/movie/' + movie.id}>
+	<a sveltekit:prefetch sveltekit:noscroll href={'/movieprev/' + movie.id}>
 		<img src={'https://image.tmdb.org/t/p/w500' + movie.poster_path} alt={movie.title} /></a
 	>
 	<div class="description">
