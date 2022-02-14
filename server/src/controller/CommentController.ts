@@ -33,7 +33,7 @@ class CommentController {
 
   public static getAllCommentsByMovie: RequestHandler = async (req, res) => {
     const movieUuid = req.body.movieId;
-    let commentsByMovie;
+     let commentsByMovie;
     try {
       commentsByMovie = await Comment.find({ where: { movie: movieUuid } });
     } catch (err) {

@@ -24,10 +24,31 @@ class MovieController {
       try {
         await Movie.delete(moviebDB);
         const favMovies = await Movie.find({ where: { user: user } });
-
-        return res
-          .status(200)
-          .json({ favMovies, success: true, true: "Movie removed from favs" });
+        const allMovies = await(
+          await Movie.find({
+            order: { user: "ASC" },
+            where: { isVisible: true },
+          })
+        ).map((x) => {
+          return [
+            x.title,
+            x.id,
+            x.poster_path,
+            x.user.email,
+            x.uuid,
+            x.user.name,
+          ];
+        });
+        let array;
+        if (allMovies.length !== 0) {
+          array = sortUsers(allMovies);
+        }
+        return res.status(200).json({
+          allMovies: array,
+          favMovies,
+          success: true,
+          true: "Movie removed from favs",
+        });
       } catch (error) {
         console.log(error);
       }
@@ -50,7 +71,24 @@ class MovieController {
     }
     try {
       const favMovies = await Movie.find({ where: { user: user } });
+      const allMovies = await(
+        await Movie.find({ order: { user: "ASC" }, where: { isVisible: true } })
+      ).map((x) => {
+        return [
+          x.title,
+          x.id,
+          x.poster_path,
+          x.user.email,
+          x.uuid,
+          x.user.name,
+        ];
+      });
+      let array;
+      if (allMovies.length !== 0) {
+        array = sortUsers(allMovies);
+      }
       res.status(201).json({
+        allMovies: array,
         favMovies,
         success: true,
         message: "Movie saved to favorites",

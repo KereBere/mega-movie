@@ -2,7 +2,7 @@
    "compilerOptions": {
       "lib": [
          "es5",
-         "es6"
+         "es6",
       ],
       "target": "es5",
       "module": "commonjs",
@@ -12,15 +12,6 @@
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
       "sourceMap": true,
-      "esModuleInterop": true,
-      "strictNullChecks": false
-   },
-   "files": [
-      "types.d.ts",
-      "./node_modules/@types",
-      "./src/@types",
-   ],
-   "include": [
-      "src/**/*"
-   ]
+      "esModuleInterop": true
+   }
 }

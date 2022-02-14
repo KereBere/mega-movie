@@ -12,6 +12,7 @@ export const checkJWT: RequestHandler = (req, res, next) => {
   try {
     jwtPayload = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
     res.locals.jwtPayload = jwtPayload;
+    return res.status(200).json({ success: true, errror: "Valid token" });
   } catch (err) {
     console.log(err);
     return res

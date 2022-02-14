@@ -21,6 +21,7 @@
 			const data = await submit.json();
 			$favMovies = data.favMovies.map((a) => a.id);
 			$popular = data.favMovies;
+			$allMovies = data.allMovies;
 		} catch (error) {}
 	};
 	const visibleToggle = async () => {

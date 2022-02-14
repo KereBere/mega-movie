@@ -14,7 +14,10 @@
 
 <nav>
 	<a class="logo" href="/"><img src="/logom.png" alt="" />Popcorn Movie</a>
+	{#if $isAuth}
 	<a href="/favmovies/">Users' Favs</a>
+	{/if}
+
 	{#if $isAuth}
 		<a href="/profile/profile">Profile</a>
 	{/if}
@@ -27,6 +30,8 @@
 	{#if $isAuth}
 		<a on:click={logout}>Logout</a>
 	{/if}
+	<a >Dashboard</a>
+
 </nav>
 
 <style>
