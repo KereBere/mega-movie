@@ -56,15 +56,4 @@ commentsByMovie.subscribe((value) => {
 	}
 });
 
-// // get local storage
-// let storage = localStorage.getItem("userInputs");
-
-// // if storage exists, use it. otherwise set empty array
-// export let userInputs = writable(JSON.parse(storage) || []);
-// export let userExpenses = writable(storage.expenses || []);
-// export let userOptions = writable(storage.options || []);
-
-// // subscribe inputs to localStorage
-// userInputs.subscribe((val) =>
-//     localStorage.setItem("userInputs", JSON.stringify(val))
-// );
+ 

@@ -16,7 +16,7 @@ import session from "express-session";
 
 createConnection()
   .then(async () => {
-    const port = 3443;
+ 
     const app = express();
 
     const httpOptions = {
@@ -32,7 +32,7 @@ createConnection()
     app.use(express.urlencoded({ extended: true }));
     app.use(express.static("public"));
     app.use(express.json());
-    app.use(cookieParser()); 
+    app.use(cookieParser());
     const session = require("express-session");
 
     app.use(
@@ -45,8 +45,8 @@ createConnection()
 
     app.use("/", routes);
 
-    https.createServer(httpOptions, app).listen(port, () => {
-      console.log(`Serving https server in the ${port}`);
+    https.createServer(httpOptions, app).listen(process.env.PORT, () => {
+      console.log(`Serving https server in the ${process.env.PORT}`);
     });
   })
   .catch((error) => console.log("Uh-oh 😿", error));
