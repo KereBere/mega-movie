@@ -22,6 +22,9 @@ TYPEORM_ENTITIES = src/entity/**/*.ts,
 NODE_TLS_REJECT_UNAUTHORIZED=0
 PORT=3443 (Https olduğu için port 3443 olarak verilmeli)
 ```
+
+-Not: net::ERR_CERT_AUTHORITY_INVALID hatası gelirse bir sekmeden https://localhost:3443' bağlanılıp, diğer sekmeden 4000 client portu üzerinden bağlanıp hata aşılabilir. 
+
 - Lokal kurulum.
 1. Önce server kurulumu ve kullanımı
 ```
@@ -35,6 +38,7 @@ cd client
 npm i
 npm run dev
 ``` 
--Not: net::ERR_CERT_AUTHORITY_INVALID hatası gelirse bir sekmeden https://localhost:3443' bağlanılıp, diğer sekmeden 4000 client portu üzerinden bağlanıp hata aşılabilir. 
+
+
 https://user-images.githubusercontent.com/86746444/153860065-912dff7d-6737-4bb2-b962-88e09fe2cbc0.mp4
 
