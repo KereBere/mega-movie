@@ -1,5 +1,7 @@
  # Ali Saydam - Final Project
 
+- Preview
+- https://elated-goldwasser-002062.netlify.app/auth/signin
 
 Patika bitirme projesi . 
 
