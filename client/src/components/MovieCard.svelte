@@ -1,11 +1,11 @@
 <script>
 	import { page } from '$app/stores';
-	export let pageName = $page.url.pathname
+	export let pageName = $page.url.pathname;
 	import { favMovies, popular, userData, isAuth, allMovies } from '../stores';
 	export let movie;
 	const newFavMovie = async (res) => {
 		try {
-			const submit = await fetch('https://localhost:3443/movie/newFavMovie', {
+			const submit = await fetch('https://ultra-movie.herokuapp.com/movie/newFavMovie', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
@@ -26,7 +26,7 @@
 	};
 	const visibleToggle = async () => {
 		try {
-			const submit = await fetch('https://localhost:3443/movie/visibletoggle', {
+			const submit = await fetch('https://ultra-movie.herokuapp.com/movie/visibletoggle', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
@@ -37,7 +37,7 @@
 
 			const data = await submit.json();
 			$popular = data.favMovies;
-			$allMovies = data.allMovies
+			$allMovies = data.allMovies;
 		} catch (error) {
 			console.log(error);
 		}
@@ -45,7 +45,7 @@
 </script>
 
 <div class="movie-card">
-	{#if pageName == "/profile/profile"}
+	{#if pageName == '/profile/profile'}
 		{#if movie.isVisible}
 			<i on:click={visibleToggle} class="is-visible fas fa-eye" />
 		{:else}
@@ -104,7 +104,7 @@
 	.fas {
 		font-size: 30px;
 	}
-	.fas:hover{
+	.fas:hover {
 		color: red;
 	}
 	.fav {
@@ -138,10 +138,10 @@
 		justify-content: space-around;
 		padding: 1rem;
 	}
-	.is-visible:hover{
+	.is-visible:hover {
 		color: #837334;
 	}
-	.is-hidden:hover{
+	.is-hidden:hover {
 		color: #837334;
 	}
 </style>

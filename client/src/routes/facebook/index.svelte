@@ -31,15 +31,14 @@
 					authResponse: { accessToken, userID }
 				} = response;
 
-				fetch('https://localhost:3443/user/facebook-login', {
-					mode : "no-cors",
+				fetch('https://ultra-movie.herokuapp.com/user/facebook-login', {
+					mode: 'no-cors',
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json'
 					},
 					body: JSON.stringify({ accessToken, userID })
-				}).then((res) => {
-				});
+				}).then((res) => {});
 			},
 			{ scope: 'public_profile, email' }
 		);

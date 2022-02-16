@@ -1,9 +1,7 @@
 <script context="module">
 	export async function load({ fetch, params }) {
 		const res = await fetch(
-			`https://api.themoviedb.org/3/movie/${params.id}?api_key=${
-				import.meta.env.VITE_API
-			}&language=en-US`
+			`https://api.themoviedb.org/3/movie/${params.id}?api_key=efaf0b9bf33d3ed3967457d165031a0b&language=en-US`
 		);
 		const movieDetail = await res.json();
 		if (res.ok) {
@@ -19,15 +17,15 @@
 </script>
 
 <script>
-	import { userData , commentMovieId, commentsByMovie } from '../../stores';
+	import { userData, commentMovieId, commentsByMovie } from '../../stores';
 	import CommentCard from '../../components/CommentCard.svelte';
 	import { fly } from 'svelte/transition';
 	export let movieDetail;
-	export let userComment = {name: "ali", comment: "dawhıhdwadhnwıoşad"}
+	export let userComment = { name: 'ali', comment: 'dawhıhdwadhnwıoşad' };
 	let comment;
 	const newComment = async (res) => {
 		try {
-			const submit = await fetch('https://localhost:3443/comment/newcomment', {
+			const submit = await fetch('https://ultra-movie.herokuapp.com/comment/newcomment', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
@@ -70,7 +68,6 @@
 			<span>Budget :</span> ${' ' + movieDetail.budget} <br />
 			<span>Runtime :</span>{movieDetail.runtime}mins
 		</p>
-		
 	</div>
 </div>
 
@@ -78,9 +75,10 @@
 	<textarea name="comment" id="" cols="30" rows="10" bind:value={comment} required />
 	<button type="submit" on:click|preventDefault={newComment}>Send</button>
 </form>
-{#each $commentsByMovie as comment }
+{#each $commentsByMovie as comment}
 	<CommentCard userComment={comment} />
 {/each}
+
 <style>
 	h2 {
 		text-align: center;

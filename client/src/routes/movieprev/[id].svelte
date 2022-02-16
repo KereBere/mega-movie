@@ -1,9 +1,7 @@
 <script context="module">
 	export async function load({ fetch, params }) {
 		const res = await fetch(
-			`https://api.themoviedb.org/3/movie/${params.id}?api_key=${
-				import.meta.env.VITE_API
-			}&language=en-US`
+			`https://api.themoviedb.org/3/movie/${params.id}?api_key=efaf0b9bf33d3ed3967457d165031a0b&language=en-US`
 		);
 		const movieDetail = await res.json();
 		if (res.ok) {
@@ -19,7 +17,7 @@
 </script>
 
 <script>
-	import { userData , commentMovieId } from '../../stores';
+	import { userData, commentMovieId } from '../../stores';
 
 	import { fly } from 'svelte/transition';
 	export let movieDetail;
@@ -27,7 +25,7 @@
 	let movieid;
 	const newComment = async (res) => {
 		try {
-			const submit = await fetch('https://localhost:3443/comment/newcomment', {
+			const submit = await fetch('https://ultra-movie.herokuapp.com/comment/newcomment', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
@@ -65,9 +63,8 @@
 			<span>Budget :</span> ${' ' + movieDetail.budget} <br />
 			<span>Runtime :</span>{movieDetail.runtime}mins
 		</p>
-		
 	</div>
-</div> 
+</div>
 
 <style>
 	h2 {

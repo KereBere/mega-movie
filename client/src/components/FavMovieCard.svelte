@@ -3,15 +3,18 @@
 	export let movie;
 	const selectMovieUuid = async () => {
 		try {
-			console.log("hehe")
+			console.log('hehe');
 			$commentMovieId = movie[4];
-			const submit = await fetch('https://localhost:3443/comment/getallcommentsbymovie', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({
-					movieId: ($commentMovieId = movie[4])
-				})
-			});
+			const submit = await fetch(
+				'https://ultra-movie.herokuapp.com/comment/getallcommentsbymovie',
+				{
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						movieId: ($commentMovieId = movie[4])
+					})
+				}
+			);
 			const data = await submit.json();
 			if (data.success) {
 				$commentsByMovie = data.commentsByMovie;

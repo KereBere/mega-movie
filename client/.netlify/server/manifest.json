@@ -1,0 +1,180 @@
+{
+  ".svelte-kit/build/app.js": {
+    "file": "app.js",
+    "src": ".svelte-kit/build/app.js",
+    "isEntry": true,
+    "imports": [
+      "_index-bb3f10a7.js"
+    ]
+  },
+  "src/routes/__layout.svelte": {
+    "file": "entries/pages/__layout.svelte.js",
+    "src": "src/routes/__layout.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index-bb3f10a7.js",
+      "_stores-59c84358.js"
+    ],
+    "css": [
+      "assets/entries/pages/__layout.svelte-aa9e5426.css"
+    ]
+  },
+  ".svelte-kit/runtime/components/error.svelte": {
+    "file": "entries/pages/error.svelte.js",
+    "src": ".svelte-kit/runtime/components/error.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index-bb3f10a7.js"
+    ]
+  },
+  "src/routes/index.svelte": {
+    "file": "entries/pages/index.svelte.js",
+    "src": "src/routes/index.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index-bb3f10a7.js",
+      "_PopularMovies-28b3decf.js",
+      "_MovieCard-cffbd243.js",
+      "_stores-59c84358.js"
+    ],
+    "css": [
+      "assets/entries/pages/index.svelte-66d22f8d.css"
+    ]
+  },
+  "src/routes/favmovies/index.svelte": {
+    "file": "entries/pages/favmovies/index.svelte.js",
+    "src": "src/routes/favmovies/index.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index-bb3f10a7.js",
+      "_stores-59c84358.js"
+    ],
+    "css": [
+      "assets/entries/pages/favmovies/index.svelte-9ec49b97.css"
+    ]
+  },
+  "src/routes/movieprev/[id].svelte": {
+    "file": "entries/pages/movieprev/_id_.svelte.js",
+    "src": "src/routes/movieprev/[id].svelte",
+    "isEntry": true,
+    "imports": [
+      "_index-bb3f10a7.js",
+      "_stores-59c84358.js"
+    ],
+    "css": [
+      "assets/entries/pages/movieprev/_id_.svelte-bb2ccaa0.css"
+    ]
+  },
+  "src/routes/facebook/index.svelte": {
+    "file": "entries/pages/facebook/index.svelte.js",
+    "src": "src/routes/facebook/index.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index-bb3f10a7.js"
+    ]
+  },
+  "src/routes/profile/profile.svelte": {
+    "file": "entries/pages/profile/profile.svelte.js",
+    "src": "src/routes/profile/profile.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index-bb3f10a7.js",
+      "_stores-59c84358.js",
+      "_PopularMovies-28b3decf.js",
+      "_MovieCard-cffbd243.js"
+    ],
+    "css": [
+      "assets/entries/pages/profile/profile.svelte-d34c5d63.css"
+    ]
+  },
+  "src/routes/search/[id].svelte": {
+    "file": "entries/pages/search/_id_.svelte.js",
+    "src": "src/routes/search/[id].svelte",
+    "isEntry": true,
+    "imports": [
+      "_index-bb3f10a7.js",
+      "_MovieCard-cffbd243.js",
+      "_stores-59c84358.js"
+    ],
+    "css": [
+      "assets/entries/pages/search/_id_.svelte-e288ff26.css"
+    ]
+  },
+  "src/routes/movie/[id].svelte": {
+    "file": "entries/pages/movie/_id_.svelte.js",
+    "src": "src/routes/movie/[id].svelte",
+    "isEntry": true,
+    "imports": [
+      "_index-bb3f10a7.js",
+      "_stores-59c84358.js"
+    ],
+    "css": [
+      "assets/entries/pages/movie/_id_.svelte-7b52b6b3.css"
+    ]
+  },
+  "src/routes/auth/signin.svelte": {
+    "file": "entries/pages/auth/signin.svelte.js",
+    "src": "src/routes/auth/signin.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index-bb3f10a7.js",
+      "_SocialAuth-5226a30d.js",
+      "_stores-59c84358.js"
+    ],
+    "css": [
+      "assets/entries/pages/auth/signin.svelte-a9bf0380.css"
+    ]
+  },
+  "src/routes/auth/signup.svelte": {
+    "file": "entries/pages/auth/signup.svelte.js",
+    "src": "src/routes/auth/signup.svelte",
+    "isEntry": true,
+    "imports": [
+      "_index-bb3f10a7.js",
+      "_stores-59c84358.js",
+      "_SocialAuth-5226a30d.js"
+    ],
+    "css": [
+      "assets/entries/pages/auth/signup.svelte-eeb7f5ea.css"
+    ]
+  },
+  "_index-bb3f10a7.js": {
+    "file": "chunks/index-bb3f10a7.js"
+  },
+  "_stores-59c84358.js": {
+    "file": "chunks/stores-59c84358.js",
+    "imports": [
+      "_index-bb3f10a7.js"
+    ]
+  },
+  "_PopularMovies-28b3decf.js": {
+    "file": "chunks/PopularMovies-28b3decf.js",
+    "imports": [
+      "_index-bb3f10a7.js",
+      "_MovieCard-cffbd243.js"
+    ],
+    "css": [
+      "assets/PopularMovies-07791903.css"
+    ]
+  },
+  "_MovieCard-cffbd243.js": {
+    "file": "chunks/MovieCard-cffbd243.js",
+    "imports": [
+      "_index-bb3f10a7.js",
+      "_stores-59c84358.js"
+    ],
+    "css": [
+      "assets/MovieCard-000612e3.css"
+    ]
+  },
+  "_SocialAuth-5226a30d.js": {
+    "file": "chunks/SocialAuth-5226a30d.js",
+    "imports": [
+      "_index-bb3f10a7.js",
+      "_stores-59c84358.js"
+    ],
+    "css": [
+      "assets/SocialAuth-c7998469.css"
+    ]
+  }
+}

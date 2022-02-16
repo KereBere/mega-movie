@@ -1,7 +1,6 @@
 import "dotenv/config";
 import "reflect-metadata";
 import express from "express";
-import https from "https";
 import path from "path";
 import fs from "fs";
 import { createConnection, getConnection } from "typeorm";
@@ -16,13 +15,7 @@ import session from "express-session";
 
 createConnection()
   .then(async () => {
- 
     const app = express();
-
-    const httpOptions = {
-      cert: fs.readFileSync(path.join(__dirname, "ssl", "cert.pem")),
-      key: fs.readFileSync(path.join(__dirname, "ssl", "key.pem")),
-    };
 
     app.use(
       cors({
@@ -45,8 +38,8 @@ createConnection()
 
     app.use("/", routes);
 
-    https.createServer(httpOptions, app).listen(process.env.PORT, () => {
-      console.log(`Serving https server in the ${process.env.PORT}`);
+    app.listen(process.env.PORT || 5000, () => {
+      console.log(`Started in port ${process.env.PORT}`);
     });
   })
   .catch((error) => console.log("Uh-oh 😿", error));

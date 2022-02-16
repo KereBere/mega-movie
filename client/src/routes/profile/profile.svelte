@@ -1,5 +1,4 @@
-<script  context="module">
-	import.meta.env.VITE_API;
+<script  context="module"> 
 	import PopularMovies from '../../components/PopularMovies.svelte';
 	import { popular, userData } from '../../stores'; 
 	import { fly } from 'svelte/transition';

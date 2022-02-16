@@ -16,7 +16,7 @@
 		on:auth-success={async (e) => {
 			const id_token = e.detail.user.wc.id_token;
 			try {
-				const submit = await fetch('https://localhost:3443/user/google', {
+				const submit = await fetch('https://ultra-movie.herokuapp.com/user/google', {
 					credentials: 'same-origin',
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },

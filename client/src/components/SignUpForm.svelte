@@ -1,4 +1,4 @@
-<script>	 
+<script>
 	import { onMount } from 'svelte';
 	import { isAuth } from '../stores';
 	import { goto } from '$app/navigation';
@@ -14,7 +14,7 @@
 	let errors = [];
 	const submitForm = async (res) => {
 		try {
-			const submit = await fetch('https://localhost:3443/user/newUser', {
+			const submit = await fetch('https://ultra-movie.herokuapp.com/user/newUser', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
@@ -29,7 +29,7 @@
 			if (data.success) {
 				message = data.message;
 				setTimeout(() => {
-					window.location.href = "/auth/signin"
+					window.location.href = '/auth/signin';
 				}, 2000);
 			} else {
 				errors = data.errors;
@@ -76,14 +76,13 @@
 						</p>
 					{/each}
 					<p class="success-p">
-						{'! ' + message+" Please login now."}
+						{'! ' + message + ' Please login now.'}
 					</p>
 				{/if}
 			</div>
 			<SocialAuth />
 			<a class="have-acc" href="/auth/signin"><p>Already have an account? Sign in!</p></a>
 			<a class="have-acc" href="/"><p>Or continue without login!</p></a>
-
 		</div>
 		<div class="or" id="or">OR</div>
 	</div>

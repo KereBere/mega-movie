@@ -7,7 +7,7 @@
 		$userData = '';
 		$popular = '';
 		$allMovies = '';
-		const submit = fetch('https://localhost:3443/user/logout');
+		const submit = fetch('https://ultra-movie.herokuapp.com/user/logout');
 		const data = await submit.json();
 	};
 </script>
@@ -15,7 +15,7 @@
 <nav>
 	<a class="logo" href="/"><img src="/logom.png" alt="" />Popcorn Movie</a>
 	{#if $isAuth}
-	<a href="/favmovies/">Users' Favs</a>
+		<a href="/favmovies/">Users' Favs</a>
 	{/if}
 
 	{#if $isAuth}
@@ -30,8 +30,7 @@
 	{#if $isAuth}
 		<a on:click={logout}>Logout</a>
 	{/if}
-	<a >Dashboard</a>
-
+	<a>Dashboard</a>
 </nav>
 
 <style>
